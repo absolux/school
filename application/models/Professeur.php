@@ -65,5 +65,16 @@ class Professeur extends CI_Model
   {
       return $this->db->where($this->pk, $id)->delete($this->table);
   }
+  
+  function get_list()
+  {
+    $results = $this->db->select(['id', 'prenom', 'nom'])->get($this->table)->result();
+    
+    return array_reduce($results, function ($memo, $item) {
+      $memo[$item->id] = $item->prenom . ' ' . $item->nom;
+      
+      return $memo;
+    }, []);
+  }
 
 }
