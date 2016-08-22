@@ -68,7 +68,13 @@ class Filiere extends CI_Model
   
   function get_list()
   {
-    return $this->db->select(['id', 'label'])->get($this->table)->result();
+    $results = $this->db->select(['id', 'label'])->get($this->table)->result();
+    
+    return array_reduce($results, function ($memo, $item) {
+      $memo[$item->id] = $item->label;
+      
+      return $memo;
+    }, []);
   }
 
 }

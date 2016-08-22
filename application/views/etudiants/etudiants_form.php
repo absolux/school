@@ -28,7 +28,7 @@
   </div>
 
   <div class="form-group">
-    <label class="col-lg-2 control-label">Sexe</label>
+    <label for="sexe" class="col-lg-2 control-label">Sexe</label>
     <div class="col-lg-10">
       <div class="radio-inline">
         <label>
