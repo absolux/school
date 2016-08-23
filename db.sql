@@ -1,5 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `db_ecole` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `db_ecole`;
+
 -- MySQL dump 10.13  Distrib 5.5.50, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: db_ecole
