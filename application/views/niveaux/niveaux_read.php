@@ -3,5 +3,5 @@
   <tr><td><?php echo $record->description; ?></td></tr>
 </table>
 <div class="">
- 	<?php echo anchor('filieres','Retour', 'class="btn btn-default "'); ?>
+ 	<?php echo anchor('niveaux','Retour', 'class="btn btn-default "'); ?>
 </div>

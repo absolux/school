@@ -1,6 +1,6 @@
 
 <div class="-page-header">
-  <h3>Liste des matières</h3>
+  <h3>Liste des semestres</h3>
 </div>
 
 <?php if ( $this->session->message ) : ?>
@@ -9,18 +9,18 @@
 
 <div class="row" style="margin-bottom: 10px">
     <div class="col-md-4">
-        <?php echo anchor(site_url('matieres/create'),'Créer une matière', 'class="btn btn-warning"'); ?>
+        <?php echo anchor(site_url('semestres/create'),'Créer un semestre', 'class="btn btn-warning"'); ?>
     </div>
     
     <div class="col-md-4 text-center"></div>
     
     <div class="col-md-4 text-right">
-      <form action="<?php echo site_url('matieres/index'); ?>" class="form-inline" method="get">
+      <form action="<?php echo site_url('semestres/index'); ?>" class="form-inline" method="get">
         <div class="form-group">
             <input type="text" class="form-control" name="q" value="<?php echo $q; ?>" placeholder="Rechercher">
         </div>
         <span class="form-group-btn">
-            <?php echo ($q <> '') ? anchor('matieres', '<i class="glyphicon glyphicon-remove"></i>', 'class="btn btn-default" title="Annuler le filtre"') : '' ?>
+            <?php echo ($q <> '') ? anchor('semestres', '<i class="glyphicon glyphicon-remove"></i>', 'class="btn btn-default" title="Annuler le filtre"') : '' ?>
             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
         </span>
       </form>
@@ -29,8 +29,8 @@
 
 <table class="table -table-bordered table-condensed table-striped table-hover" style="margin-bottom: 10px">
     <tr>
-        <th>Nom de filière</th>
-        <th>Description</th>
+        <th>Niveau</th>
+        <!--<th>Description</th>-->
         <th></th>
     </tr>
     <?php if (! count($records) ): ?>
@@ -39,11 +39,11 @@
     <?php foreach ($records as $item) : ?>
         <tr>
          <td><?php echo $item->label ?></td>
-         <td><?php echo substr($item->description, 0, 75) . '...' ?></td>
+         <!--<td><?php //echo substr($item->description, 0, 75) . '...' ?></td>-->
          <td class="text-right" width="100px">
-            <?php echo anchor('matieres/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info"'); ?>
-            <?php echo anchor('matieres/update/'.$item->id, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
-            <?php echo anchor('matieres/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
+            <?php //echo anchor('semestres/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info"'); ?>
+            <?php echo anchor('semestres/update/'.$item->id, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
+            <?php echo anchor('semestres/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
         </td>
     </tr>
     <?php endforeach; ?>
