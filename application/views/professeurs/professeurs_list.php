@@ -41,12 +41,10 @@
     <?php else: ?>
     <?php foreach ($records as $item) : ?>
         <tr>
-         <!--<td><?php //echo $item->code ?></td>-->
          <td><?php echo $item->prenom . ' ' . $item->nom ?></td>
          <td><?php echo $item->email ?></td>
-         <!--<td><?php //echo $item->adresse . ' ' . $item->zipcode . ', ' . $item->ville ?></td>-->
          <td><?php echo $item->tel ?></td>
-         <td style="text-align:center" width="100px">
+         <td class="text-right" width="100px">
             <?php echo anchor('professeurs/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info"'); ?>
             <?php echo anchor('professeurs/update/'.$item->id, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
             <?php echo anchor('professeurs/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>

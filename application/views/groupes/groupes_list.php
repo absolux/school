@@ -44,7 +44,7 @@
          <td><?php echo $item->annee ?></td>
          <td><?php echo $item->niveau ?></td>
          <td><?php echo $item->filiere ?></td>
-         <td style="text-align:center" width="100px">
+         <td class="text-right" width="100px">
             <?php echo anchor('groupes/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info"'); ?>
             <?php echo anchor('groupes/update/'.$item->id, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
             <?php echo anchor('groupes/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
