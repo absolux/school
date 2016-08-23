@@ -4,7 +4,7 @@ class Groupe extends CI_Model
 {
 
   public $table = 'groupes';
-  public $view = "groupes_details";
+  // public $view = "groupes_details";
   public $pk = 'id';
   public $search_columns = [ 'groupes.label' ];
 
@@ -23,13 +23,13 @@ class Groupe extends CI_Model
   // get data by id
   function get_by_id($id)
   {
-    // $this->db->select(['groupes.*', 'annees.label as annee', 'filieres.label as filiere', 'niveaux.label as niveau']);
-    // $this->db->order_by('groupes.label');
-    // $this->db->join('annee_scolaires as annees', 'annees.id = groupes.id_annee');
-    // $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');
-    // $this->db->join('filieres', 'filieres.id = groupes.id_filiere');
-    $this->db->where($this->view . '.' . $this->pk, $id);
-    return $this->db->get($this->view)->row();
+    $this->db->select(['groupes.*', 'annees.label as annee', 'filieres.label as filiere', 'niveaux.label as niveau']);
+    $this->db->order_by('groupes.label');
+    $this->db->join('annee_scolaires as annees', 'annees.id = groupes.id_annee');
+    $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');
+    $this->db->join('filieres', 'filieres.id = groupes.id_filiere');
+    $this->db->where($this->table . '.' . $this->pk, $id);
+    return $this->db->get($this->table)->row();
   }
   
   // get total rows
@@ -51,7 +51,12 @@ class Groupe extends CI_Model
       }
     }
     
-    return $this->db->limit($limit, $start)->get($this->view)->result();
+    $this->db->select(['groupes.*', 'annees.label as annee', 'filieres.label as filiere', 'niveaux.label as niveau']);
+    $this->db->order_by('groupes.label');
+    $this->db->join('annee_scolaires as annees', 'annees.id = groupes.id_annee');
+    $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');
+    $this->db->join('filieres', 'filieres.id = groupes.id_filiere');
+    return $this->db->limit($limit, $start)->get($this->table)->result();
   }
 
   // insert data
