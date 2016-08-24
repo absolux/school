@@ -28,8 +28,8 @@
   </div>
 
   <div class="form-group">
-    <label class="col-lg-2 control-label">Sexe</label>
-    <div class="col-lg-10">
+    <label for="sexe" class="col-lg-2 control-label">Sexe</label>
+    <div class="col-sm-6">
       <div class="radio-inline">
         <label>
           <?php echo form_radio("sexe", 'M', ($sexe == 'M'), 'id="sexe"') ?>

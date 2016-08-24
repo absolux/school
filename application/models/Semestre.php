@@ -1,11 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Professeur extends CI_Model
+class Semestre extends CI_Model
 {
 
-  public $table = 'professeurs';
+  public $table = 'semestres';
   public $pk = 'id';
-  public $search_columns = [ 'nom', 'prenom', 'tel', 'email' ];
+  public $search_columns = [ 'label' ];
 
 
   function __construct()
@@ -44,7 +44,7 @@ class Professeur extends CI_Model
       }
     }
     
-    $this->db->order_by('prenom')->order_by('nom');
+    $this->db->order_by('label');
     return $this->db->limit($limit, $start)->get($this->table)->result();
   }
 
@@ -68,10 +68,10 @@ class Professeur extends CI_Model
   
   function get_list()
   {
-    $results = $this->db->select(['id', 'prenom', 'nom'])->get($this->table)->result();
+    $results = $this->db->select(['id', 'label'])->get($this->table)->result();
     
     return array_reduce($results, function ($memo, $item) {
-      $memo[$item->id] = $item->prenom . ' ' . $item->nom;
+      $memo[$item->id] = $item->label;
       
       return $memo;
     }, []);

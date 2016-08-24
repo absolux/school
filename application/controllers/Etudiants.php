@@ -77,6 +77,11 @@ class Etudiants extends CI_Controller
   public function create_action() 
   {
     $this->_rules();
+    
+    // apply is_unique validation rule only on student creation
+    $this->form_validation->set_rules('code', 'code étudiant', 'trim|required|is_unique[etudiants.code]', [
+      'is_unique' => "Ce {field} est déjà utilisé."
+    ]);
 
     if ($this->form_validation->run() == FALSE) {
       $this->create();
@@ -179,6 +184,7 @@ class Etudiants extends CI_Controller
   {
     $this->load->library('form_validation');
     
+    $this->form_validation->set_rules('code', 'code étudiant', 'trim|required');
     $this->form_validation->set_rules('nom', 'nom', 'trim|required');
     $this->form_validation->set_rules('prenom', 'prénom', 'trim|required');
     $this->form_validation->set_rules('email', 'adresse e-mail', 'trim|required');
@@ -191,10 +197,6 @@ class Etudiants extends CI_Controller
     $this->form_validation->set_rules('lieu_naiss', 'lieu de naissance', 'trim');
     $this->form_validation->set_rules('sexe', 'sexe', 'trim');
     $this->form_validation->set_rules('id', 'id', 'trim');
-    
-    $this->form_validation->set_rules('code', 'code étudiant', 'trim|required|is_unique[etudiants.code]', [
-      'is_unique' => "Ce {field} est déjà utilisé."
-    ]);
   }
 
 }

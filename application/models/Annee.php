@@ -44,20 +44,24 @@ class Annee extends CI_Model
       }
     }
     
-    $this->db->order_by('label');
+    $this->db->order_by('label', 'DESC');
     return $this->db->limit($limit, $start)->get($this->table)->result();
   }
 
   // insert data
   function insert($data)
   {
-      return $this->db->insert($this->table, $data);
+    if ( $data['active'] ) $this->deactivateAll();
+    
+    return $this->db->insert($this->table, $data);
   }
 
   // update data
   function update($id, $data)
   {
-      return $this->db->where($this->pk, $id)->update($this->table, $data);
+    if ( $data['active'] ) $this->deactivateAll();
+    
+    return $this->db->where($this->pk, $id)->update($this->table, $data);
   }
 
   // delete data
@@ -68,7 +72,23 @@ class Annee extends CI_Model
   
   function get_list()
   {
-    return $this->db->select(['id', 'label'])->get($this->table)->result();
+    $results = $this->db->select(['id', 'label'])->get($this->table)->result();
+    
+    return array_reduce($results, function ($memo, $item) {
+      $memo[$item->id] = $item->label;
+      
+      return $memo;
+    }, []);
+  }
+  
+  // activate the given year id
+  function activate($id) {
+    return $this->update($id, ['active' => TRUE]);
+  }
+  
+  // deactivate all academic years
+  function deactivateAll() {
+    return $this->db->set('active', FALSE)->update($this->table);
   }
 
 }

@@ -67,5 +67,16 @@ class Etudiant extends CI_Model
   {
       return $this->db->where($this->pk, $id)->delete($this->table);
   }
+  
+  function get_list()
+  {
+    $results = $this->db->select(['id', 'code', 'nom', 'prenom'])->get($this->table)->result();
+    
+    return array_reduce($results, function ($memo, $item) {
+      $memo[$item->id] = implode(' ', [$item->code, $item->prenom, $item->nom]);
+      
+      return $memo;
+    }, []);
+  }
 
 }
