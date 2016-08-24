@@ -4,7 +4,16 @@
 	<meta charset="UTF-8">
 	<title>School Management System A-A</title>
 	
-  <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap-paper.min.css') ?>"/>
+  <!-- Styles -->
+  <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap-paper.min.css') ?>" />
+  <link rel="stylesheet" href="<?php echo base_url('assets/select2/css/select2.min.css') ?>" />
+  <link rel="stylesheet" href="<?php echo base_url('assets/select2/css/select2-bootstrap.min.css') ?>" />
+  
+  <!-- Scripts -->
+	<script src="<?php echo base_url("assets/jquery/jquery-1.11.2.min.js") ?>"></script>
+	<script src="<?php echo base_url("assets/bootstrap/js/bootstrap.min.js") ?>"></script>
+  <script src="<?php echo base_url("assets/select2/js/select2.min.js") ?>"></script>
+  <script src="<?php echo base_url("assets/select2/js/i18n/fr.js") ?>"></script>
   
 </head>
 <body>
@@ -30,9 +39,6 @@
 		</div>
 
 	</div>
-
-	<script src="<?php echo base_url("assets/js/jquery-1.11.2.min.js") ?>"></script>
-	<script src="<?php echo base_url("assets/bootstrap/js/bootstrap.min.js") ?>"></script>
 
 </body>
 </html>

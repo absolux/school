@@ -12,6 +12,7 @@ class Groupes extends CI_Controller
     $this->load->model('Annee');
     $this->load->model('Niveau');
     $this->load->model('Filiere');
+    $this->load->model('Etudiant');
   }
 
   public function index()
@@ -67,6 +68,8 @@ class Groupes extends CI_Controller
       'annees' => $this->Annee->get_list(),
       'niveaux' => $this->Niveau->get_list(),
       'filieres' => $this->Filiere->get_list(),
+      'list_etudiants' => $this->Etudiant->get_list(),
+      'etudiants' => set_value('etudiants', []),
     );
     
     $this->load->view('template/layout', $data);
@@ -109,6 +112,8 @@ class Groupes extends CI_Controller
         'annees' => $this->Annee->get_list(),
         'niveaux' => $this->Niveau->get_list(),
         'filieres' => $this->Filiere->get_list(),
+        'list_etudiants' => $this->Etudiant->get_list(),
+        'etudiants' => set_value('etudiants', []),
       );
       
       $this->load->view('template/layout', $data);
