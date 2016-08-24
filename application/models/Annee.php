@@ -81,6 +81,17 @@ class Annee extends CI_Model
     }, []);
   }
   
+  // only a list of active academic years
+  function get_active_list() {
+    $results = $this->db->select(['id', 'label'])->where('active', TRUE)->get($this->table)->result();
+    
+    return array_reduce($results, function ($memo, $item) {
+      $memo[$item->id] = $item->label;
+      
+      return $memo;
+    }, []);
+  }
+  
   // activate the given year id
   function activate($id) {
     return $this->update($id, ['active' => TRUE]);

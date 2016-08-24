@@ -1,10 +1,6 @@
 
 <h3><?php echo $button ?> un groupe</h3>
 
-<div class="alert alert-info">
-  <b>Info</b> La fonctionnalité d'ajout des étudiants dans un groupe est en cours de développement
-</div>
-
 <?php echo form_open($action, 'class="form-horizontal"', ['id' => $id]) ?>
   
   <div class="form-group">
