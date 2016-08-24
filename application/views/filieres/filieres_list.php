@@ -41,7 +41,7 @@
          <td><?php echo $item->label ?></td>
          <td><?php echo substr($item->description, 0, 75) . '...' ?></td>
          <td class="text-right" width="100px">
-            <?php echo anchor('filieres/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info"'); ?>
+            <?php //echo anchor('filieres/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info"'); ?>
             <?php echo anchor('filieres/update/'.$item->id, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
             <?php echo anchor('filieres/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
         </td>

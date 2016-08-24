@@ -46,7 +46,7 @@
       <td><?php echo $item->date_fin ?></td>
       <td class="text-right" width="120px">
         <?php if (! $item->active ) echo anchor('annees-scolaires/activate/'.$item->id,'<i class="glyphicon glyphicon-ok-circle"></i>', 'class="btn btn-xs btn-success" title=Activer'); ?>
-        <?php echo anchor('annees-scolaires/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info" title=Consulter'); ?>
+        <?php //echo anchor('annees-scolaires/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info" title=Consulter'); ?>
         <?php echo anchor('annees-scolaires/update/'.$item->id, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
         <?php echo anchor('annees-scolaires/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
       </td>
