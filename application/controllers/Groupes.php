@@ -48,6 +48,7 @@ class Groupes extends CI_Controller
       $this->load->view('template/layout', [
         'record' => $row,
         'content_view' => 'groupes/groupes_read',
+        'etudiants' => $this->Groupe->get_etudiants($id),
       ]);
     } else {
       $this->session->set_flashdata('message', 'Aucun résultat trouvé');
@@ -70,7 +71,7 @@ class Groupes extends CI_Controller
       'niveaux' => $this->Niveau->get_list(),
       'filieres' => $this->Filiere->get_list(),
       'list_etudiants' => $this->Etudiant->get_list(),
-      'etudiants' => set_value('etudiants', []),
+      'etudiants' => set_value('etudiants[]', [], FALSE),
     );
     
     $this->load->view('template/layout', $data);
@@ -94,6 +95,10 @@ class Groupes extends CI_Controller
   public function update($id) 
   {
     $row = $this->Groupe->get_by_id($id);
+    
+    $etudiant_ids = array_map(function ($item) {
+      return $item->id;
+    }, $this->Groupe->get_etudiants($id));
 
     if ($row) {
       $data = array(
@@ -109,7 +114,7 @@ class Groupes extends CI_Controller
         'niveaux' => $this->Niveau->get_list(),
         'filieres' => $this->Filiere->get_list(),
         'list_etudiants' => $this->Etudiant->get_list(),
-        'etudiants' => set_value('etudiants', $this->Groupe->get_etudiants($id)),
+        'etudiants' => set_value('etudiants[]', $etudiant_ids, FALSE),
       );
       
       $this->load->view('template/layout', $data);
@@ -159,7 +164,7 @@ class Groupes extends CI_Controller
     
     $this->form_validation->set_rules('id', 'id', 'trim');
     $this->form_validation->set_rules('label', 'nom', 'trim|required');
-    $this->form_validation->set_rules('etudiants', 'étudiants', 'required');
+    $this->form_validation->set_rules('etudiants[]', 'étudiants', 'required');
     $this->form_validation->set_rules('id_niveau', 'niveau', 'trim|required');
     $this->form_validation->set_rules('id_filiere', 'filière', 'trim|required');
     $this->form_validation->set_rules('id_annee', 'Année scolaire', 'trim|required');

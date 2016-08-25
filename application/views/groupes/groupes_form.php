@@ -37,9 +37,9 @@
 
   <div class="form-group">
     <label for="etudiants" class="col-sm-2 control-label">Etudiants</label>
-    <div class="col-sm-6 <?php echo form_error("etudiants") ? 'has-error' : '' ?>">
-      <?php echo form_dropdown("etudiants", $list_etudiants, $etudiants, 'id=etudiants class="form-control" required multiple') ?>
-      <?php echo form_error("etudiants", '<span class="help-block">', '</span>') ?>
+    <div class="col-sm-6 <?php echo form_error("etudiants[]") ? 'has-error' : '' ?>">
+      <?php echo form_dropdown("etudiants[]", $list_etudiants, $etudiants, 'id=etudiants class="form-control" required multiple') ?>
+      <?php echo form_error("etudiants[]", '<span class="help-block">', '</span>') ?>
     </div>
   </div>
 

@@ -104,24 +104,24 @@ class Groupe extends CI_Model
   
   function get_etudiants($group_id) {
     $this->db->select('etudiants.*')->from('etudiants');
-    $this->db->join('etudiants_groupes as eg', 'eg.id_etudiant = etudiants.id');
-    $this->db->where('eg.id_groupe', $group_id);
+    $this->db->join('etudiants_groups as eg', 'eg.id_etudiant = etudiants.id');
+    $this->db->where('eg.id_group', $group_id);
     return $this->db->get()->result();
   }
   
   function sync_etudiants($group, $etudiants = []) {
     // detach the previous students
-    $this->db->where('id_groupe', $group)->delete('etudiants_groupes');
+    $this->db->where('id_group', $group)->delete('etudiants_groups');
     
     // create pivot table records
-    $data = array_map(function ($id) {
-      return ['id_groupe' => $group, 'id_etudiant' => $id_etud]
-    }, $etudiants)
+    $data = array_map(function ($id) use($group) {
+      return ['id_group' => $group, 'id_etudiant' => $id];
+    }, $etudiants);
     
     if ( empty($data) ) return false;
     
     // attach the new students
-    return $this->db->insert('etudiants_groupes', $data);
+    return $this->db->insert_batch('etudiants_groups', $data);
   }
   
 }
