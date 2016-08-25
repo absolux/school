@@ -79,9 +79,7 @@ class Etudiants extends CI_Controller
     $this->_rules();
     
     // apply is_unique validation rule only on student creation
-    $this->form_validation->set_rules('code', 'code étudiant', 'trim|required|is_unique[etudiants.code]', [
-      'is_unique' => "Ce {field} est déjà utilisé."
-    ]);
+    $this->form_validation->set_rules('code', 'code étudiant', 'trim|required|is_unique[etudiants.code]');
 
     if ($this->form_validation->run() == FALSE) {
       $this->create();
