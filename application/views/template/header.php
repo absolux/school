@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse" style="border-radius: 0">
+<nav class="navbar navbar-default" style="border-radius: 0">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">

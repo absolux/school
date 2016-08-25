@@ -26,7 +26,7 @@
 		<div class="row">
 
 			<div class="col-md-2">
-			<?php $this->load->view('template/side_bar'); ?>
+			<?php $this->load->view('template/sidebar'); ?>
 
 			</div>
 			<div class="col-md-10">
