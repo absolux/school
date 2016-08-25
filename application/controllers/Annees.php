@@ -162,7 +162,7 @@ class Annees extends CI_Controller
     $this->load->library('form_validation');
     
     $this->form_validation->set_rules('active', 'active', 'trim|required');
-    $this->form_validation->set_rules('label', 'label', 'trim');
+    $this->form_validation->set_rules('label', 'label', 'trim|required');
     $this->form_validation->set_rules('date_debut', 'date début', 'trim');
     $this->form_validation->set_rules('date_fin', 'date fin', 'trim');
     
