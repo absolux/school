@@ -4,17 +4,18 @@ class Groupes extends CI_Controller
 {
   
   protected $per_page = 15;
-
+  
   function __construct()
   {
     parent::__construct();
+    
     $this->load->model('Groupe');
     $this->load->model('Annee');
     $this->load->model('Niveau');
     $this->load->model('Filiere');
     $this->load->model('Etudiant');
   }
-
+  
   public function index()
   {
     $q = urldecode($this->input->get('q', TRUE));
@@ -38,7 +39,7 @@ class Groupes extends CI_Controller
       'pagination' => $this->pagination->create_links(),
     ]);
   }
-
+  
   public function read($id) 
   {
     $row = $this->Groupe->get_by_id($id);
@@ -53,7 +54,7 @@ class Groupes extends CI_Controller
       redirect(site_url('groupes'));
     }
   }
-
+  
   public function create() 
   {
     $data = array(
@@ -74,22 +75,17 @@ class Groupes extends CI_Controller
     
     $this->load->view('template/layout', $data);
   }
-
+  
   public function create_action() 
   {
     $this->_rules();
-
-    if ($this->form_validation->run() == FALSE) {
-      $this->create();
-    } else {
-      $data = array(
-        'label' => $this->input->post('label', TRUE),
-        'id_annee' => $this->input->post('id_annee', TRUE),
-        'id_niveau' => $this->input->post('id_niveau', TRUE),
-        'id_filiere' => $this->input->post('id_filiere', TRUE),
-      );
-
-      $this->Groupe->insert($data);
+    
+    if ( $this->form_validation->run() == FALSE ) $this->create();
+    else {
+      $this->Groupe->insert($this->input->post([
+        'label', 'id_annee', 'id_niveau', 'id_filiere', 'etudiants'
+      ], TRUE));
+      
       $this->session->set_flashdata('message', 'Création réussie');
       redirect(site_url('groupes'));
     }
@@ -113,7 +109,7 @@ class Groupes extends CI_Controller
         'niveaux' => $this->Niveau->get_list(),
         'filieres' => $this->Filiere->get_list(),
         'list_etudiants' => $this->Etudiant->get_list(),
-        'etudiants' => set_value('etudiants', []),
+        'etudiants' => set_value('etudiants', $this->Groupe->get_etudiants($id)),
       );
       
       $this->load->view('template/layout', $data);
@@ -125,19 +121,18 @@ class Groupes extends CI_Controller
 
   public function update_action() 
   {
+    $id = $this->input->post('id', TRUE);
+    
     $this->_rules();
-
-    if ($this->form_validation->run() == FALSE) {
-      $this->update($this->input->post('id', TRUE));
-    } else {
-      $data = array(
-        'label' => $this->input->post('label', TRUE),
-        'id_annee' => $this->input->post('id_annee', TRUE),
-        'id_niveau' => $this->input->post('id_niveau', TRUE),
-        'id_filiere' => $this->input->post('id_filiere', TRUE),
-      );
-
-      $this->Groupe->update($this->input->post('id', TRUE), $data);
+    
+    if ($this->form_validation->run() == FALSE) $this->update($id);
+    else {
+      $data = $this->input->post([
+        'label', 'id_annee', 'id_niveau', 'id_filiere', 'etudiants'
+      ], TRUE);
+      
+      $this->Groupe->update($id, $data);
+      
       $this->session->set_flashdata('message', 'Modifications appliquées');
       redirect(site_url('groupes'));
     }
@@ -149,23 +144,25 @@ class Groupes extends CI_Controller
 
     if ($row) {
       $this->Groupe->delete($id);
+      
       $this->session->set_flashdata('message', 'Suppression réussie');
-      redirect(site_url('groupes'));
     } else {
       $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('groupes'));
     }
+    
+    redirect(site_url('groupes'));
   }
 
   public function _rules() 
   {
     $this->load->library('form_validation');
     
+    $this->form_validation->set_rules('id', 'id', 'trim');
     $this->form_validation->set_rules('label', 'nom', 'trim|required');
-    $this->form_validation->set_rules('id_annee', 'Année scolaire', 'trim|required');
+    $this->form_validation->set_rules('etudiants', 'étudiants', 'required');
     $this->form_validation->set_rules('id_niveau', 'niveau', 'trim|required');
     $this->form_validation->set_rules('id_filiere', 'filière', 'trim|required');
-    $this->form_validation->set_rules('id', 'id', 'trim');
+    $this->form_validation->set_rules('id_annee', 'Année scolaire', 'trim|required');
   }
 
 }
