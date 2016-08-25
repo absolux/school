@@ -62,13 +62,27 @@ class Groupe extends CI_Model
   // insert data
   function insert($data)
   {
-      return $this->db->insert($this->table, $data);
+    $etudiants = $data['etudiants'];
+    unset($data['etudiants']);
+    
+    if ( ($result = $this->db->insert($this->table, $data)) ) {
+      $this->sync_etudiants($this->db->insert_id(), $etudiants);
+    }
+    
+    return $result;
   }
 
   // update data
   function update($id, $data)
   {
-      return $this->db->where($this->pk, $id)->update($this->table, $data);
+    $etudiants = $data['etudiants'];
+    unset($data['etudiants']);
+    
+    if ( ($result = $this->db->where($this->pk, $id)->update($this->table, $data)) ) {
+      $this->sync_etudiants($id, $etudiants);
+    }
+    
+    return $result;
   }
 
   // delete data
@@ -87,5 +101,27 @@ class Groupe extends CI_Model
       return $memo;
     }, []);
   }
-
+  
+  function get_etudiants($group_id) {
+    $this->db->select('etudiants.*')->from('etudiants');
+    $this->db->join('etudiants_groupes as eg', 'eg.id_etudiant = etudiants.id');
+    $this->db->where('eg.id_groupe', $group_id);
+    return $this->db->get()->result();
+  }
+  
+  function sync_etudiants($group, $etudiants = []) {
+    // detach the previous students
+    $this->db->where('id_groupe', $group)->delete('etudiants_groupes');
+    
+    // create pivot table records
+    $data = array_map(function ($id) {
+      return ['id_groupe' => $group, 'id_etudiant' => $id_etud]
+    }, $etudiants)
+    
+    if ( empty($data) ) return false;
+    
+    // attach the new students
+    return $this->db->insert('etudiants_groupes', $data);
+  }
+  
 }
