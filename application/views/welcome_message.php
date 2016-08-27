@@ -67,6 +67,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 
+<?php echo $this->session->flashdata('msg') ?>
+
 <div id="container">
 	<h1>Welcome to CodeIgniter!</h1>
 
