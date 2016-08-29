@@ -1,7 +1,5 @@
-<?php 
-/**
-* 
-*/
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Auth extends CI_Controller
 {
 	
@@ -22,32 +20,34 @@ class Auth extends CI_Controller
 	{
 
 		$this->load->library('form_validation');
-		
-		// get form input
-		$email = $this->input->post("email");
-        $password = $this->input->post("password");
 
 		// form validation
 		$this->form_validation->set_rules("email", "Email", "trim|required");
 		$this->form_validation->set_rules("password", "Mot de passe", "trim|required");
 		
 		if ($this->form_validation->run() == FALSE)
-        {
+    {
 			// validation fail
 			$this->load->view('auth/login');
 		}
 		else
 		{
 			// check for user credentials
+		  $email = $this->input->post("email");
+      $password = $this->input->post("password");
 			$uresult = $this->User->get_user($email, $password);
-			if (count($uresult) > 0)
+			
+      if (count($uresult) > 0)
 			{
 				// set session
-				$sess_data = array('login' => TRUE, 'name' => $uresult[0]->name, 'uid' => $uresult[0]->id);
-				$this->session->set_userdata($sess_data);
-				$this->session->set_flashdata('msg', 'Logged in');
+				$this->session->set_userdata([
+          'login' => TRUE,
+          'uid' => $uresult[0]->id,
+          'name' => $uresult[0]->name,
+        ]);
+				
+        $this->session->set_flashdata('msg', 'Logged in');
 				redirect("/");
-
 			}
 			else
 			{
@@ -57,16 +57,13 @@ class Auth extends CI_Controller
 		}
 	}
 
-
+  
 	public function logout()
 	{
-		
-
-
-        $this->session->sess_destroy();
-        $this->session->set_flashdata('msg', 'Logged out');
+		$this->session->sess_destroy();
+    
+    $this->session->set_flashdata('msg', 'Logged out');
 		$this->login();
-
-
 	}
+  
 }

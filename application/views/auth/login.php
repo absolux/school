@@ -3,84 +3,87 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Login</title>
+	<title>Authentification</title>
+  
 	<link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap-paper.min.css') ?>" />
+  
+  <style>
+    body {
+      padding-top: 15em;
+      background-color: #009688;
+      background: url('<?php  echo base_url('assets/images/school.jpg')  ?>') no-repeat;
+      background-position: center;
+      background-size: cover;
+      min-height: 100vh;
+    }
+
+    .login-form {
+      background-color: #fff;
+      display: block;
+      margin: auto;
+      width: 80%;
+      padding: 35px 50px;
+      max-width: 38em;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    .shadow {
+      box-shadow: 0px 0px 12px #353535;
+    }
+    
+    .login-content {
+      text-align: center;
+    }
+    
+    .form-group {
+      margin-bottom: 30px;
+      margin-right: 0 !important;
+    }
+  </style>
 </head>
-<style>
-	body {
-		background-color: darkgray;
-		font-family: verdana;
-		font-size: 12px;
-		font-weight: normal;
-		padding-top: 14em;
-		background: url('<?php  echo base_url('assets/images/school.jpg')  ?>') no-repeat;
-		background-position: center;
-		background-size: cover;
-	}
-
-	.login-form {
-		background-color: #fff;
-		display: block;
-		margin: auto;
-		padding: 50px 10px 50px 10px;
-		width: 48em;
-		border-radius: 4px;
-	}
-
-	h1 {
-		text-align: center;
-		font-size: 24px;
-		margin-bottom: 10px;
-	}
-
-	.shadow {
-		box-shadow: 0px 0px 12px #353535;
-	}
-</style>
 
 <body>
-	<div class="container">
-		<div class="content">
-			<div class="row">
+	<div class="container login-content">
 				<div class="login-form shadow">
 					<?php echo form_open("auth/do_login", 'class="form-horizontal"') ?>
-						<h1>Login</h1>
+						<!--<h1 class="text-center">Login</h1>-->
 
 						<?php if ( $msg = $this->session->flashdata('msg') ): ?>
-							
-
-
-							<div class="alert alert-warning" role="alert">
-								<i class="glyphicon glyphicon-ban-circle"></i> <?php echo $msg ?>
-							</div>
+							<div class="alert alert-warning text-center" role="alert"><?php echo $msg ?></div>
 						<?php endif ?>
-
-						<div class="form-group">
-							<label for="inputEmail" class="col-sm-2 control-label">E-mail</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inputEmail" name="email">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="inputPassword" class="col-sm-2 control-label">Mot de passe</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control" id="inputPassword" name="password">
-							</div>
-						</div>
+            
+            <div class="form-group">
+              <label class="sr-only" for="email">Adresse E-mail</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input type="text" class="form-control" id="email" name="email" placeholder="E-mail" />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="sr-only" for="password">Mot de passe</label>
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" />
+              </div>
+            </div>
 					
-						<div class="form-group">
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-primary">Login</button>
-							</div>
-						</div>
+            <div class="text-right">
+						<button type="submit" class="btn btn-success">
+              Login &nbsp;
+              <i class="glyphicon glyphicon-log-in"></i>
+            </button>
+            </div>
+            
 					</form>
 				</div>
-			</div>
 		</div>
-	</div>
-
-
-
-
 </body>
+
 </html>
