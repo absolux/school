@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Annees extends CI_Controller
+class Annees extends MY_Controller
 {
   
   protected $per_page = 15;

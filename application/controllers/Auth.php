@@ -46,12 +46,12 @@ class Auth extends CI_Controller
           'name' => $uresult[0]->name,
         ]);
 				
-        $this->session->set_flashdata('msg', 'Logged in');
+        $this->session->set_flashdata('login-success', 'Welcome');
 				redirect("/");
 			}
 			else
 			{
-				$this->session->set_flashdata('msg', 'E-mail ou mot de passe invalides');
+				$this->session->set_flashdata('login-error', 'E-mail ou mot de passe invalides');
 				redirect('auth/login');
 			}
 		}
@@ -62,7 +62,7 @@ class Auth extends CI_Controller
 	{
 		$this->session->sess_destroy();
     
-    $this->session->set_flashdata('msg', 'Logged out');
+    $this->session->set_flashdata('logout-success', 'Logged out');
 		$this->login();
 	}
   

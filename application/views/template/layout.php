@@ -9,11 +9,10 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/select2/css/select2.min.css') ?>" />
   <link rel="stylesheet" href="<?php echo base_url('assets/select2/css/select2-bootstrap.min.css') ?>" />
 
-
   <style>
   	body{
   		/* font-family: verdana; */
-  		background-color:#F5F5F5
+  		/*background-color:#F5F5F5*/
   	}
   </style>
   

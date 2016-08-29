@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Groupes extends CI_Controller
+class Groupes extends MY_Controller
 {
   
   protected $per_page = 15;

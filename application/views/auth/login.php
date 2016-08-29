@@ -54,7 +54,13 @@
 					<?php echo form_open("auth/do_login", 'class="form-horizontal"') ?>
 						<!--<h1 class="text-center">Login</h1>-->
 
-						<?php if ( $msg = $this->session->flashdata('msg') ): ?>
+						<?php if ( $msg = $this->session->flashdata('logout-success') ): ?>
+							<div class="alert alert-success text-center" role="alert">
+                Vous vous êtes déconnecté.
+              </div>
+						<?php endif ?>
+            
+            <?php if ( $msg = $this->session->flashdata('login-error') ): ?>
 							<div class="alert alert-warning text-center" role="alert"><?php echo $msg ?></div>
 						<?php endif ?>
             
@@ -75,7 +81,7 @@
             </div>
 					
             <div class="text-right">
-						<button type="submit" class="btn btn-success">
+						<button type="submit" class="btn btn-info">
               Login &nbsp;
               <i class="glyphicon glyphicon-log-in"></i>
             </button>
