@@ -16,7 +16,7 @@
       
       <ul class="nav navbar-nav navbar-right">
        <li>
-         <?php echo anchor('auth/logout','Déconnection') ?>
+         <?php echo anchor('auth/logout','Déconnexion') ?>
        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
