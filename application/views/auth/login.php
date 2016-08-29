@@ -12,6 +12,7 @@
       padding-top: 15em;
       background-color: #009688;
       background: url('<?php  echo base_url('assets/images/school.jpg')  ?>') no-repeat;
+      /*background: url('http://percolatestudio.com/img/how-ipadair-600x450@2x.jpg') no-repeat;*/
       background-position: center;
       background-size: cover;
       min-height: 100vh;

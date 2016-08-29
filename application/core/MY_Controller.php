@@ -6,7 +6,7 @@
 class MY_Controller extends CI_Controller
 {
 
-	public $layout = "tempate/layout";
+	public $layout = "template/layout";
 	
 	function __construct()
 	{
