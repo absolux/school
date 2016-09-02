@@ -24,7 +24,7 @@
 	<li class="<?php if ( strpos(uri_string(), 'niveaux') === 0 ) echo 'active' ?>">
     <?php echo anchor("niveaux", "Niveaux") ?>
   </li>
-	<li class="disabled <?php if ( strpos(uri_string(), 'absences') === 0 ) echo 'active' ?>">
+	<li class="<?php if ( strpos(uri_string(), 'absences') === 0 ) echo 'active' ?>">
     <?php echo anchor("absences", "Absences") ?>
   </li>
 </ul>

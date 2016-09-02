@@ -144,7 +144,7 @@ CREATE TABLE `seances` (
   `date_debut` datetime DEFAULT NULL,
   `date_fin` datetime DEFAULT NULL,
   `id_matiere` int(11) NOT NULL,
-  `id_prof` int(11) NOT NULL,
+  `id_prof` int(11) DEFAULT NULL,
   `id_group` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_seances_matieres` (`id_matiere`),
