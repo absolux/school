@@ -32,6 +32,12 @@ class Groupe extends CI_Model
     return $this->db->get($this->table)->row();
   }
   
+  // determine if a given group id exists
+  function exists($id) {
+    // TODO check also the active year
+    return $this->db->where($this->pk, $id)->count_all_results($this->table) == 1
+  }
+  
   // get total rows
   function total_rows($q = NULL) {
     if ( $q ) {
