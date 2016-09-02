@@ -45,9 +45,11 @@ class Absence extends CI_Model
   // get total rows
   function total_rows($q = NULL) {
     if ( $q ) {
+      $this->db->group_start();
       foreach ( $this->search_columns as $col ) {
         $this->db->or_like($col, $q);
       }
+      $this->db->group_end();
     }
     
     $this->db->join('seances', "seances.id = {$this->table}.id_seance");
@@ -62,9 +64,11 @@ class Absence extends CI_Model
   // get data with limit and search
   function get_limit_data($limit, $start = 0, $q = NULL) {
     if ( $q ) {
+      $this->db->group_start();
       foreach ( $this->search_columns as $col ) {
         $this->db->or_like($col, $q);
       }
+      $this->db->group_end();
     }
     
     $this->db->select([
