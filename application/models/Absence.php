@@ -6,7 +6,7 @@ class Absence extends CI_Model
   public $pk = 'id';
   public $table = 'absences';
   // public $view = "absences_details";
-  public $search_columns = [ /*'matieres.label', */'nom', 'prenom', 'code' ];
+  public $search_columns = [ 'matieres.label', 'nom', 'prenom', 'code' ];
 
 
   function __construct()
