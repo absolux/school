@@ -61,7 +61,7 @@ class Absences extends MY_Controller
   {
     $group_id = $this->input->get('id_group', TRUE);
     
-    if (! $this->Groupe->get_by_id($group_id) ) {
+    if (! $this->Groupe->exists($group_id) ) {
       $this->session->set_flashdata('message', 'Aucun résultat trouvé');
       redirect('absences');
       return;
