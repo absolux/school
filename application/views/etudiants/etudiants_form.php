@@ -97,7 +97,10 @@
   <div class="form-group">
     <label for="date_naiss" class="col-sm-2 control-label">Date de naissance</label>
     <div class="col-sm-3 <?php echo form_error("date_naiss") ? 'has-error' : '' ?>">
-      <input type="date" class="form-control" id="date_naiss" name="date_naiss" value="<?php echo $date_naiss; ?>" />
+      <div class="input-group">
+        <input type="text" class="form-control datepicker" id="date_naiss" name="date_naiss" value="<?php echo $date_naiss; ?>" />
+        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+      </div>
       <?php echo form_error("date_naiss", '<span class="help-block">', '</span>') ?>
     </div>
   </div>
@@ -118,3 +121,10 @@
   </div>
 
 <?php echo form_close() ?>
+
+<script type="text/javascript">
+  $('.datepicker').datepicker({
+    format: 'yyyy-mm-dd',
+    weekStart: 1
+  })
+</script>

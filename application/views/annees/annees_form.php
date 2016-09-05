@@ -14,7 +14,10 @@
   <div class="form-group">
     <label for="date_debut" class="col-sm-2 control-label">Date début</label>
     <div class="col-sm-3 <?php echo form_error("date_debut") ? 'has-error' : '' ?>">
-      <input type="date" class="form-control" id="date_debut" name="date_debut" value="<?php echo $date_debut; ?>" />
+      <div class="input-group">
+        <input type="text" class="form-control datepicker" id="date_debut" name="date_debut" value="<?php echo $date_debut; ?>" />
+        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+      </div>
       <?php echo form_error("date_debut", '<span class="help-block">', '</span>') ?>
     </div>
   </div>
@@ -22,7 +25,10 @@
   <div class="form-group">
     <label for="date_fin" class="col-sm-2 control-label">Date fin</label>
     <div class="col-sm-3 <?php echo form_error("date_fin") ? 'has-error' : '' ?>">
-      <input type="date" class="form-control" id="date_fin" name="date_fin" value="<?php echo $date_fin; ?>" />
+      <div class="input-group">
+        <input type="text" class="form-control datepicker" id="date_fin" name="date_fin" value="<?php echo $date_fin; ?>" />
+        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+      </div>
       <?php echo form_error("date_fin", '<span class="help-block">', '</span>') ?>
     </div>
   </div>
@@ -47,3 +53,10 @@
   </div>
 
 <?php echo form_close() ?>
+
+<script type="text/javascript">
+  $('.datepicker').datepicker({
+    format: 'yyyy-mm-dd',
+    weekStart: 1
+  })
+</script>

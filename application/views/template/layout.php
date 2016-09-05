@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/bootstrap/css/bootstrap-paper.min.css') ?>" />
   <link rel="stylesheet" href="<?php echo base_url('assets/select2/css/select2.min.css') ?>" />
   <link rel="stylesheet" href="<?php echo base_url('assets/select2/css/select2-bootstrap.min.css') ?>" />
+  <link rel="stylesheet" href="<?php echo base_url('assets/datepicker/css/datepicker.css') ?>" />
 
   <style>
   	body {
@@ -25,6 +26,7 @@
 	<script src="<?php echo base_url("assets/bootstrap/js/bootstrap.min.js") ?>"></script>
   <script src="<?php echo base_url("assets/select2/js/select2.min.js") ?>"></script>
   <script src="<?php echo base_url("assets/select2/js/i18n/fr.js") ?>"></script>
+  <script src="<?php echo base_url("assets/datepicker/js/bootstrap-datepicker.js") ?>"></script>
   
 </head>
 <body>

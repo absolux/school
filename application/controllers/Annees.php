@@ -57,7 +57,7 @@ class Annees extends MY_Controller
       'content_view' => 'annees/annees_form',
       'action' => site_url('annees-scolaires/create_action'),
       'id' => set_value('id'),
-      'active' => set_value('active'),
+      'active' => set_value('active', 1),
       'label' => set_value('label'),
       'date_debut' => set_value('date_debut'),
       'date_fin' => set_value('date_fin'),
