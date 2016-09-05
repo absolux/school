@@ -10,10 +10,14 @@
   <link rel="stylesheet" href="<?php echo base_url('assets/select2/css/select2-bootstrap.min.css') ?>" />
 
   <style>
-  	body{
+  	body {
   		/* font-family: verdana; */
   		/*background-color:#F5F5F5*/
   	}
+    
+    optgroup {
+      background: #ddd;
+    }
   </style>
   
   <!-- Scripts -->
@@ -21,7 +25,6 @@
 	<script src="<?php echo base_url("assets/bootstrap/js/bootstrap.min.js") ?>"></script>
   <script src="<?php echo base_url("assets/select2/js/select2.min.js") ?>"></script>
   <script src="<?php echo base_url("assets/select2/js/i18n/fr.js") ?>"></script>
-
   
 </head>
 <body>

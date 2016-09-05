@@ -9,7 +9,7 @@
 
 <div class="row" style="margin-bottom: 10px">
     <div class="col-md-4">
-        <?php echo anchor(site_url('filieres/create'),'Créer un filière', 'class="btn btn-warning"'); ?>
+        <?php echo anchor(site_url('filieres/create'),'Créer une filière', 'class="btn btn-warning"'); ?>
     </div>
     
     <div class="col-md-4 text-center"></div>

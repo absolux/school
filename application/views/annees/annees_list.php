@@ -9,7 +9,7 @@
 
 <div class="row" style="margin-bottom: 10px">
     <div class="col-md-4">
-      <?php echo anchor(site_url('annees-scolaires/create'),'Créer un année scolaire', 'class="btn btn-warning"'); ?>
+      <?php echo anchor(site_url('annees-scolaires/create'),'Créer une année scolaire', 'class="btn btn-warning"'); ?>
     </div>
     
     <div class="col-md-4 text-center"></div>

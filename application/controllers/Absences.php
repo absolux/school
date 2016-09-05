@@ -38,7 +38,7 @@ class Absences extends MY_Controller
       'content_view' => 'absences/list',
       'pagination' => $this->pagination->create_links(),
       
-      'groupes' => $this->Groupe->get_list(),
+      'groupes' => $this->Groupe->get_list_with_niveaux(),
     ]);
   }
 

@@ -73,7 +73,7 @@
       
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Sélectionnez le groupe d'étudiant</h4>
+        <!--<h4 class="modal-title">Sélectionnez</h4>-->
       </div>
       
       <div class="modal-body">
@@ -88,7 +88,7 @@
         <div class="form-group">
           <!--<label for="id_group" class="col-sm-4 control-label">Groupe</label>-->
           <div class="col-sm-offset-2 col-sm-8">
-            <?php echo form_dropdown("id_group", ['' => "Sélectionnez"] + $groupes, NULL, 'id=id_group class="form-control" required') ?>
+            <?php echo form_dropdown("id_group", ['' => "Sélectionnez le groupe d'étudiant"] + $groupes, NULL, 'id=id_group class="form-control" required') ?>
           </div>
         </div>
         
