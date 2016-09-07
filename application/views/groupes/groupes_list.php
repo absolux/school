@@ -31,7 +31,7 @@
     <tr>
         <th>Classe</th>
         <th>Année scolaire</th>
-        <th>Niveau</th>
+        <!--<th>Niveau</th>-->
         <th>Filière</th>
         <th></th>
     </tr>
@@ -42,7 +42,7 @@
         <tr>
          <td><?php echo $item->label ?></td>
          <td><?php echo $item->annee ?></td>
-         <td><?php echo $item->niveau ?></td>
+         <!--<td><?php //echo $item->niveau ?></td>-->
          <td><?php echo $item->filiere ?></td>
          <td class="text-right" width="100px">
             <?php echo anchor('classes/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info"'); ?>

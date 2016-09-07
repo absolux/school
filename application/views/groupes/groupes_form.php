@@ -19,13 +19,13 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <!--<div class="form-group">
     <label for="id_niveau" class="col-sm-2 control-label">Niveau</label>
-    <div class="col-sm-6 <?php echo form_error("id_niveau") ? 'has-error' : '' ?>">
-      <?php echo form_dropdown("id_niveau", ['' => "Sélectionnez"] + $niveaux, $id_niveau, 'id=id_niveau class="form-control" required') ?>
-      <?php echo form_error("id_niveau", '<span class="help-block">', '</span>') ?>
+    <div class="col-sm-6 <?php //echo form_error("id_niveau") ? 'has-error' : '' ?>">
+      <?php //echo form_dropdown("id_niveau", ['' => "Sélectionnez"] + $niveaux, $id_niveau, 'id=id_niveau class="form-control" required') ?>
+      <?php //echo form_error("id_niveau", '<span class="help-block">', '</span>') ?>
     </div>
-  </div>
+  </div>-->
 
   <div class="form-group">
     <label for="id_filiere" class="col-sm-2 control-label">Filière</label>

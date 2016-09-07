@@ -11,7 +11,7 @@ class Groupes extends MY_Controller
     
     $this->load->model('Groupe');
     $this->load->model('Annee');
-    $this->load->model('Niveau');
+    // $this->load->model('Niveau');
     $this->load->model('Filiere');
     $this->load->model('Etudiant');
   }
@@ -64,11 +64,11 @@ class Groupes extends MY_Controller
       'id' => set_value('id'),
       'label' => set_value('label'),
       'id_annee' => set_value('id_annee'),
-      'id_niveau' => set_value('id_niveau'),
+      // 'id_niveau' => set_value('id_niveau'),
       'id_filiere' => set_value('id_filiere'),
       'content_view' => 'groupes/groupes_form',
       'annees' => $this->Annee->get_active_list(),
-      'niveaux' => $this->Niveau->get_list(),
+      // 'niveaux' => $this->Niveau->get_list(),
       'filieres' => $this->Filiere->get_list(),
       'list_etudiants' => $this->Etudiant->get_list(),
       'etudiants' => set_value('etudiants[]', [], FALSE),
@@ -84,7 +84,7 @@ class Groupes extends MY_Controller
     if ( $this->form_validation->run() == FALSE ) $this->create();
     else {
       $this->Groupe->insert($this->input->post([
-        'label', 'id_annee', 'id_niveau', 'id_filiere', 'etudiants'
+        'label', 'id_annee'/*, 'id_niveau'*/, 'id_filiere', 'etudiants'
       ], TRUE));
       
       $this->session->set_flashdata('message', 'Création réussie');
@@ -106,12 +106,12 @@ class Groupes extends MY_Controller
         'action' => site_url('classes/update_action'),
         'id' => set_value('id', $row->id),
         'label' => set_value('label', $row->label),
-        'id_niveau' => set_value('id_niveau', $row->id_niveau),
+        // 'id_niveau' => set_value('id_niveau', $row->id_niveau),
         'id_annee' => set_value('id_annee', $row->id_annee),
         'id_filiere' => set_value('id_filiere', $row->id_filiere),
         'content_view' => 'groupes/groupes_form',
         'annees' => $this->Annee->get_active_list(),
-        'niveaux' => $this->Niveau->get_list(),
+        // 'niveaux' => $this->Niveau->get_list(),
         'filieres' => $this->Filiere->get_list(),
         'list_etudiants' => $this->Etudiant->get_list(),
         'etudiants' => set_value('etudiants[]', $etudiant_ids, FALSE),
@@ -133,7 +133,7 @@ class Groupes extends MY_Controller
     if ($this->form_validation->run() == FALSE) $this->update($id);
     else {
       $data = $this->input->post([
-        'label', 'id_annee', 'id_niveau', 'id_filiere', 'etudiants'
+        'label', 'id_annee'/*, 'id_niveau'*/, 'id_filiere', 'etudiants'
       ], TRUE);
       
       $this->Groupe->update($id, $data);
@@ -165,7 +165,7 @@ class Groupes extends MY_Controller
     $this->form_validation->set_rules('id', 'id', 'trim');
     $this->form_validation->set_rules('label', 'nom', 'trim|required');
     $this->form_validation->set_rules('etudiants[]', 'étudiants', 'required');
-    $this->form_validation->set_rules('id_niveau', 'niveau', 'trim|required');
+    // $this->form_validation->set_rules('id_niveau', 'niveau', 'trim|required');
     $this->form_validation->set_rules('id_filiere', 'filière', 'trim|required');
     $this->form_validation->set_rules('id_annee', 'Année scolaire', 'trim|required');
   }

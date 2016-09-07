@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `groupes`;
 CREATE TABLE `groupes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(50) NOT NULL,
-  `id_niveau` int(11) NOT NULL,
+  `id_niveau` int(11) DEFAULT NULL,
   `id_annee` int(11) NOT NULL,
   `id_filiere` int(11) NOT NULL,
   PRIMARY KEY (`id`),

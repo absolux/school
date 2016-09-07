@@ -23,10 +23,10 @@ class Groupe extends CI_Model
   // get data by id
   function get_by_id($id)
   {
-    $this->db->select(['groupes.*', 'annees.label as annee', 'filieres.label as filiere', 'niveaux.label as niveau']);
+    $this->db->select(['groupes.*', 'annees.label as annee', 'filieres.label as filiere'/*, 'niveaux.label as niveau'*/]);
     $this->db->order_by('groupes.label');
     $this->db->join('annee_scolaires as annees', 'annees.id = groupes.id_annee');
-    $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');
+    // $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');
     $this->db->join('filieres', 'filieres.id = groupes.id_filiere');
     $this->db->where($this->table . '.' . $this->pk, $id);
     return $this->db->get($this->table)->row();
@@ -57,10 +57,10 @@ class Groupe extends CI_Model
       }
     }
     
-    $this->db->select(['groupes.*', 'annees.label as annee', 'filieres.label as filiere', 'niveaux.label as niveau']);
+    $this->db->select(['groupes.*', 'annees.label as annee', 'filieres.label as filiere'/*, 'niveaux.label as niveau'*/]);
     $this->db->order_by('groupes.label');
     $this->db->join('annee_scolaires as annees', 'annees.id = groupes.id_annee');
-    $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');
+    // $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');
     $this->db->join('filieres', 'filieres.id = groupes.id_filiere');
     return $this->db->limit($limit, $start)->get($this->table)->result();
   }
@@ -109,20 +109,20 @@ class Groupe extends CI_Model
     }, []);
   }
   
-  function get_list_with_niveaux() {
-    $this->db->select(["{$this->table}.id", "{$this->table}.label", 'niveaux.label as niveau']);
-    $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');
-    // TODO set the current year criteria
-    $results = $this->db->get($this->table)->result();
+  // function get_list_with_niveaux() {
+  //   $this->db->select(["{$this->table}.id", "{$this->table}.label", 'niveaux.label as niveau']);
+  //   $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');
+  //   // TODO set the current year criteria
+  //   $results = $this->db->get($this->table)->result();
     
-    return array_reduce($results, function ($memo, $item) {
-      if (! isset($memo[$item->niveau]) ) $memo[$item->niveau] = array();
+  //   return array_reduce($results, function ($memo, $item) {
+  //     if (! isset($memo[$item->niveau]) ) $memo[$item->niveau] = array();
       
-      $memo[$item->niveau][$item->id] = $item->label;
+  //     $memo[$item->niveau][$item->id] = $item->label;
       
-      return $memo;
-    }, []);
-  }
+  //     return $memo;
+  //   }, []);
+  // }
   
   function get_etudiants($group_id) {
     $this->db->select('etudiants.*')->from('etudiants');
