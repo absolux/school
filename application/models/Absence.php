@@ -28,11 +28,13 @@ class Absence extends CI_Model
     $this->db->select([
       "{$this->table}.*",
       'matieres.label as matiere',
+      'semestres.label as semestre',
       'seances.date_debut', 'seances.date_fin',
       'etudiants.code', 'etudiants.nom', 'etudiants.prenom',
     ]);
     
     $this->db->join('seances', "seances.id = {$this->table}.id_seance");
+    $this->db->join('semestres', "seances.id_semestre = semestres.id", 'left');
     $this->db->join('matieres', 'matieres.id = seances.id_matiere');
     $this->db->join('etudiants', "etudiants.id = {$this->table}.id_etudiant");
     
@@ -74,11 +76,13 @@ class Absence extends CI_Model
     $this->db->select([
       "{$this->table}.*",
       'matieres.label as matiere',
+      'semestres.label as semestre',
       'seances.date_debut', 'seances.date_fin',
       'etudiants.code', 'etudiants.nom', 'etudiants.prenom',
     ]);
     
     $this->db->join('seances', "seances.id = {$this->table}.id_seance");
+    $this->db->join('semestres', "seances.id_semestre = semestres.id", 'left');
     $this->db->join('matieres', 'matieres.id = seances.id_matiere');
     $this->db->join('etudiants', "etudiants.id = {$this->table}.id_etudiant");
     

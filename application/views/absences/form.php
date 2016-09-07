@@ -5,15 +5,23 @@
   
   <div class="form-group">
     <label for="id_matiere" class="col-sm-2 control-label">Matière</label>
-    <div class="col-sm-6 has-warning <?php //echo form_error("id_matiere") ? 'has-error' : '' ?>">
+    <div class="col-sm-6 -has-warning <?php echo form_error("id_matiere") ? 'has-error' : '' ?>">
       <?php echo form_dropdown("id_matiere", ['' => "Sélectionnez"] + $matieres, $id_matiere, 'id=id_matiere class="form-control" required') ?>
       <?php echo form_error("id_matiere", '<span class="help-block">', '</span>') ?>
     </div>
   </div>
 
   <div class="form-group">
+    <label for="id_semestre" class="col-sm-2 control-label">Semestre</label>
+    <div class="col-sm-6 -has-warning <?php echo form_error("id_semestre") ? 'has-error' : '' ?>">
+      <?php echo form_dropdown("id_semestre", ['' => "Sélectionnez"] + $semestres, $id_semestre, 'id=id_semestre class="form-control" required') ?>
+      <?php echo form_error("id_semestre", '<span class="help-block">', '</span>') ?>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="date_debut" class="col-sm-2 control-label">Date</label>
-    <div class="col-sm-3 has-warning <?php //echo form_error("date_debut") ? 'has-error' : '' ?>">
+    <div class="col-sm-3 -has-warning <?php echo form_error("date_debut") ? 'has-error' : '' ?>">
       <div class="input-group">
         <input type="text" id="date_debut" name="date_debut" class="form-control datepicker" value="<?php echo $date_debut ?>" required />
         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>

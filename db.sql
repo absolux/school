@@ -145,11 +145,13 @@ CREATE TABLE `seances` (
   `date_fin` datetime DEFAULT NULL,
   `id_matiere` int(11) NOT NULL,
   `id_prof` int(11) DEFAULT NULL,
+  `id_semestre` int(11) DEFAULT NULL,
   `id_group` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_seances_matieres` (`id_matiere`),
   KEY `FK_seances_professeurs` (`id_prof`),
   KEY `FK_seances_groups` (`id_group`),
+  CONSTRAINT `fk_seances_semestres` FOREIGN KEY (`id_semestre`) REFERENCES `semestres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_seances_groups` FOREIGN KEY (`id_group`) REFERENCES `groupes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_seances_matieres` FOREIGN KEY (`id_matiere`) REFERENCES `matieres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_seances_professeurs` FOREIGN KEY (`id_prof`) REFERENCES `professeurs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

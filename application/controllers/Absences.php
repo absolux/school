@@ -13,7 +13,7 @@ class Absences extends MY_Controller
     $this->load->model('Absence');
     $this->load->model('Seance');
     $this->load->model('Groupe');
-    // $this->load->model('Annee');
+    $this->load->model('Semestre');
   }
 
   public function index()
@@ -74,11 +74,13 @@ class Absences extends MY_Controller
       
       'id' => set_value('id'),
       'id_matiere' => set_value('id_matiere'),
+      'id_semestre' => set_value('id_semestre'),
       'id_group' => set_value('id_group', $group_id),
       'date_debut' => set_value('date_debut'),
       // 'date_fin' => set_value('date_fin'),
       // 'id_prof' => set_value('id_prof'),
       'matieres' => $this->Matiere->get_list(),
+      'semestres' => $this->Semestre->get_list(),
       'etudiants' => $this->Groupe->get_etudiants($group_id),
     );
     
@@ -93,7 +95,7 @@ class Absences extends MY_Controller
       $this->create();
     } else {
       $this->Seance->insert($this->input->post([
-        'id_matiere', 'id_group', 'date_debut', 'presence'
+        'id_matiere', 'id_group', 'date_debut', 'presence', 'id_semestre'
       ], TRUE));
 
       $this->session->set_flashdata('message', 'Création réussie');
@@ -163,6 +165,7 @@ class Absences extends MY_Controller
     $this->form_validation->set_rules('date_debut', 'Date début', 'trim|required');
     $this->form_validation->set_rules('id_group', 'Groupe', 'trim|required');
     $this->form_validation->set_rules('id_matiere', 'Matière', 'trim|required');
+    $this->form_validation->set_rules('id_semestre', 'Semestre', 'trim|required');
     // $this->form_validation->set_rules('id_prof', 'Formateur', 'trim|required');
     
     $this->form_validation->set_rules('id', 'id', 'trim');
