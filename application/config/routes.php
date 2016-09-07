@@ -55,3 +55,6 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['annees-scolaires'] = 'annees';
 $route['annees-scolaires/(.+)'] = 'annees/$1';
+
+$route['classes'] = 'groupes';
+$route['classes/(.+)'] = 'groupes/$1';

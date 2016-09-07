@@ -22,7 +22,7 @@ class Groupes extends MY_Controller
     $start = intval($this->input->get('start'));
     
     $config['per_page'] = $this->per_page;
-    $config['base_url'] = base_url('groupes');
+    $config['base_url'] = base_url('classes');
     $config['total_rows'] = $this->Groupe->total_rows($q);
     
     $this->load->library('pagination');
@@ -52,7 +52,7 @@ class Groupes extends MY_Controller
       ]);
     } else {
       $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('groupes'));
+      redirect(site_url('classes'));
     }
   }
   
@@ -88,7 +88,7 @@ class Groupes extends MY_Controller
       ], TRUE));
       
       $this->session->set_flashdata('message', 'Création réussie');
-      redirect(site_url('groupes'));
+      redirect(site_url('classes'));
     }
   }
 
@@ -103,7 +103,7 @@ class Groupes extends MY_Controller
     if ($row) {
       $data = array(
         'button' => 'Modifier',
-        'action' => site_url('groupes/update_action'),
+        'action' => site_url('classes/update_action'),
         'id' => set_value('id', $row->id),
         'label' => set_value('label', $row->label),
         'id_niveau' => set_value('id_niveau', $row->id_niveau),
@@ -120,7 +120,7 @@ class Groupes extends MY_Controller
       $this->load->view('template/layout', $data);
     } else {
       $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('groupes'));
+      redirect(site_url('classes'));
     }
   }
 
@@ -139,7 +139,7 @@ class Groupes extends MY_Controller
       $this->Groupe->update($id, $data);
       
       $this->session->set_flashdata('message', 'Modifications appliquées');
-      redirect(site_url('groupes'));
+      redirect(site_url('classes'));
     }
   }
 
@@ -155,7 +155,7 @@ class Groupes extends MY_Controller
       $this->session->set_flashdata('message', 'Aucun résultat trouvé');
     }
     
-    redirect(site_url('groupes'));
+    redirect(site_url('classes'));
   }
 
   public function _rules() 

@@ -7,10 +7,10 @@
       <tr><th>Filière</th><td><?php echo $record->filiere; ?></td></tr>
     </table>
     <div class="">
-      <?php echo anchor('groupes/update/' . $record->id, 'Modifier', 'class="btn btn-primary"') ?>
-      <?php echo anchor('groupes/delete/' . $record->id, 'Supprimer', 
+      <?php echo anchor('classes/update/' . $record->id, 'Modifier', 'class="btn btn-primary"') ?>
+      <?php echo anchor('classes/delete/' . $record->id, 'Supprimer', 
         'class="btn btn-danger" onclick="javascrip:return confirm(\'Etes vous sûr ?\')"') ?>
-      <?php echo anchor('groupes','Retour', 'class="btn btn-default "'); ?>
+      <?php echo anchor('classes','Retour', 'class="btn btn-default "'); ?>
     </div>
   </div>
   
@@ -26,7 +26,7 @@
       </thead>-->
       <tbody>
         <?php if (! count($etudiants) ): ?>
-        <tr class="warning text-center"><td colspan="3">Ce groupe est vide</td></tr>
+          <tr class="warning text-center"><td colspan="3">Aucun étudiant trouvé</td></tr>
         <?php else: ?>
         <?php foreach ($etudiants as $item) : ?>
             <tr>

@@ -6,8 +6,8 @@
 	<li class="<?php if ( strpos(uri_string(), 'professeurs') === 0 ) echo 'active' ?>">
     <?php echo anchor("professeurs", "Professeurs") ?>
   </li>
-	<li class="<?php if ( strpos(uri_string(), 'groupes') === 0 ) echo 'active' ?>">
-    <?php echo anchor("groupes", "Groupes") ?>
+	<li class="<?php if ( strpos(uri_string(), 'classes') === 0 ) echo 'active' ?>">
+    <?php echo anchor("classes", "Classes") ?>
   </li>
 	<li class="<?php if ( strpos(uri_string(), 'filieres') === 0 ) echo 'active' ?>">
     <?php echo anchor("filieres", "Filières") ?>
@@ -21,9 +21,9 @@
 	<li class="<?php if ( strpos(uri_string(), 'matieres') === 0 ) echo 'active' ?>">
     <?php echo anchor("matieres", "Matières") ?>
   </li>
-	<li class="<?php if ( strpos(uri_string(), 'niveaux') === 0 ) echo 'active' ?>">
-    <?php echo anchor("niveaux", "Niveaux") ?>
-  </li>
+	<!--<li class="<?php //if ( strpos(uri_string(), 'niveaux') === 0 ) echo 'active' ?>">
+    <?php //echo anchor("niveaux", "Niveaux") ?>
+  </li>-->
 	<li class="<?php if ( strpos(uri_string(), 'absences') === 0 ) echo 'active' ?>">
     <?php echo anchor("absences", "Absences") ?>
   </li>

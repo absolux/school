@@ -1,5 +1,5 @@
 
-<h3><?php echo $button ?> un groupe</h3>
+<h3><?php echo $button ?> une classe</h3>
 
 <?php echo form_open($action, 'class="form-horizontal"', ['id' => $id]) ?>
   
@@ -46,7 +46,7 @@
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
-      <?php echo anchor('groupes', 'Annuler', 'class="btn btn-default"') ?>
+      <?php echo anchor('classes', 'Annuler', 'class="btn btn-default"') ?>
     </div>
   </div>
 
