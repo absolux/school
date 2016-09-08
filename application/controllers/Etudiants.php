@@ -185,11 +185,11 @@ class Etudiants extends MY_Controller
     $this->form_validation->set_rules('code', 'code étudiant', 'trim|required');
     $this->form_validation->set_rules('nom', 'nom', 'trim|required');
     $this->form_validation->set_rules('prenom', 'prénom', 'trim|required');
-    $this->form_validation->set_rules('email', 'adresse e-mail', 'trim|required');
+    $this->form_validation->set_rules('email', 'adresse e-mail', 'trim|valid_email');
     $this->form_validation->set_rules('adresse', 'adresse', 'trim');
     $this->form_validation->set_rules('zipcode', 'zipcode', 'trim');
     $this->form_validation->set_rules('ville', 'ville', 'trim');
-    $this->form_validation->set_rules('tel', 'téléphone', 'trim|required');
+    $this->form_validation->set_rules('tel', 'téléphone', 'trim');
     $this->form_validation->set_rules('cin', 'CIN', 'trim');
     $this->form_validation->set_rules('date_naiss', 'date de naissance', 'trim');
     $this->form_validation->set_rules('lieu_naiss', 'lieu de naissance', 'trim');
