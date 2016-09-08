@@ -30,7 +30,7 @@
   <div class="form-group">
     <label for="email" class="col-sm-2 control-label">Adresse E-mail</label>
     <div class="col-sm-6 <?php echo form_error("email") ? 'has-error' : '' ?>">
-      <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" required />
+      <input type="text" class="form-control" id="email" name="email" value="<?php echo $email; ?>" />
       <?php echo form_error("email", '<span class="help-block">', '</span>') ?>
     </div>
   </div>
@@ -57,7 +57,7 @@
   <div class="form-group">
     <label for="tel" class="col-sm-2 control-label">Téléphone</label>
     <div class="col-sm-3 <?php echo form_error("tel") ? 'has-error' : '' ?>">
-      <?php echo form_input("tel", $tel, 'class="form-control" id="tel" required') ?>
+      <?php echo form_input("tel", $tel, 'class="form-control" id="tel"') ?>
       <?php echo form_error("tel", '<span class="help-block">', '</span>') ?>
     </div>
   </div>

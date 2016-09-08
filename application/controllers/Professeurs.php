@@ -157,8 +157,8 @@ class Professeurs extends MY_Controller
     
     $this->form_validation->set_rules('nom', 'nom', 'trim|required');
     $this->form_validation->set_rules('prenom', 'prénom', 'trim|required');
-    $this->form_validation->set_rules('email', 'adresse e-mail', 'trim|required');
-    $this->form_validation->set_rules('tel', 'téléphone', 'trim|required');
+    $this->form_validation->set_rules('email', 'adresse e-mail', 'trim|valid_email');
+    $this->form_validation->set_rules('tel', 'téléphone', 'trim');
     $this->form_validation->set_rules('cin', 'CIN', 'trim');
     $this->form_validation->set_rules('sexe', 'sexe', 'trim');
     $this->form_validation->set_rules('id', 'id', 'trim');
