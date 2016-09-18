@@ -22,7 +22,11 @@ class Semestre extends CI_Model
   // get data by id
   function get_by_id($id)
   {
-      return $this->db->get_where($this->table, [$this->pk => $id])->row();
+    $this->db->select(["{$this->table}.*", 'annees.label as annee']);
+    
+    $this->db->join('annee_scolaires as annees', "annees.id = {$this->table}.id_annee");
+    
+    return $this->db->get_where($this->table, ["{$this->table}.{$this->pk}" => $id])->row();
   }
   
   // get total rows
@@ -44,20 +48,27 @@ class Semestre extends CI_Model
       }
     }
     
-    $this->db->order_by('label');
+    $this->db->select(["{$this->table}.*", 'annees.label as annee']);
+    
+    $this->db->join('annee_scolaires as annees', "annees.id = {$this->table}.id_annee");
+    
+    // $this->db->order_by('label');
+    
     return $this->db->limit($limit, $start)->get($this->table)->result();
   }
 
   // insert data
   function insert($data)
   {
-      return $this->db->insert($this->table, $data);
+    $this->deactivateAll();
+    
+    return $this->db->insert($this->table, $data);
   }
 
   // update data
   function update($id, $data)
   {
-      return $this->db->where($this->pk, $id)->update($this->table, $data);
+    return $this->db->where($this->pk, $id)->update($this->table, $data);
   }
 
   // delete data
@@ -68,13 +79,29 @@ class Semestre extends CI_Model
   
   function get_list()
   {
-    $results = $this->db->select(['id', 'label'])->get($this->table)->result();
+    $this->db->join('annee_scolaires as annees', "annees.id = {$this->table}.id_annee and annees.active = 1");
+    
+    $this->db->select(["{$this->table}.id", "{$this->table}.label"]);
+    
+    $results = $this->db->get($this->table)->result();
     
     return array_reduce($results, function ($memo, $item) {
       $memo[$item->id] = $item->label;
       
       return $memo;
     }, []);
+  }
+  
+  // activate the given semester id
+  function activate($id) {
+    $this->deactivateAll();
+    
+    return $this->update($id, ['active' => TRUE]);
+  }
+  
+  // deactivate all semestres
+  function deactivateAll() {
+    return $this->db->set('active', FALSE)->update($this->table);
   }
 
 }

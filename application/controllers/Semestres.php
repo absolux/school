@@ -8,7 +8,9 @@ class Semestres extends MY_Controller
   function __construct()
   {
     parent::__construct();
+    
     $this->load->model('Semestre');
+    $this->load->model('Annee');
   }
 
   public function index()
@@ -58,6 +60,9 @@ class Semestres extends MY_Controller
       'action' => site_url('semestres/create_action'),
       'id' => set_value('id'),
       'label' => set_value('label'),
+      'id_annee' => set_value('id_annee'),
+      
+      'annees' => $this->Annee->get_active_list(),
     );
     
     $this->load->view('template/layout', $data);
@@ -70,9 +75,11 @@ class Semestres extends MY_Controller
     if ($this->form_validation->run() == FALSE) {
       $this->create();
     } else {
-      $data = array(
+      $data = [
+        'active' => TRUE,
         'label' => $this->input->post('label',TRUE),
-      );
+        'id_annee' => $this->input->post('id_annee', TRUE),
+      ];
 
       $this->Semestre->insert($data);
       $this->session->set_flashdata('message', 'Création réussie');
@@ -91,7 +98,10 @@ class Semestres extends MY_Controller
         'action' => site_url('semestres/update_action'),
         'id' => set_value('id', $row->id),
         'label' => set_value('label', $row->label),
-        );
+        'id_annee' => set_value('id_annee', $row->id_annee),
+        
+        'annees' => $this->Annee->get_active_list(),
+      );
       
       $this->load->view('template/layout', $data);
     } else {
@@ -109,6 +119,7 @@ class Semestres extends MY_Controller
     } else {
       $data = array(
         'label' => $this->input->post('label', TRUE),
+        'id_annee' => $this->input->post('id_annee', TRUE),
       );
 
       $this->Semestre->update($this->input->post('id', TRUE), $data);
@@ -130,12 +141,27 @@ class Semestres extends MY_Controller
       redirect(site_url('semestres'));
     }
   }
+  
+  public function activate($id) 
+  {
+    $row = $this->Semestre->get_by_id($id);
+
+    if ($row) {
+      $this->Semestre->activate($id);
+      $this->session->set_flashdata('message', 'Modification réussie');
+      redirect(site_url('semestres'));
+    } else {
+      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
+      redirect(site_url('semestres'));
+    }
+  }
 
   public function _rules() 
   {
     $this->load->library('form_validation');
     
     $this->form_validation->set_rules('label', 'nom', 'trim|required');
+    $this->form_validation->set_rules('id_annee', 'Année scolaire', 'trim|required');
     $this->form_validation->set_rules('id', 'id', 'trim');
   }
 

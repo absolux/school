@@ -52,8 +52,12 @@ DROP TABLE IF EXISTS `semestres`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `semestres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_annee` int(11) NOT NULL,
   `label` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `FK_semestres_annee_scolaires` (`id_annee`),
+  CONSTRAINT `FK_semestres_annee_scolaires` FOREIGN KEY (`id_annee`) REFERENCES `annee_scolaires` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
