@@ -29,7 +29,7 @@
 
 <table class="table -table-bordered table-condensed table-striped table-hover" style="margin-bottom: 10px">
     <tr>
-        <th>Nom de filière</th>
+        <th>Matière</th>
         <th>Description</th>
         <th></th>
     </tr>

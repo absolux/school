@@ -155,7 +155,8 @@ CREATE TABLE `seances` (
   KEY `FK_seances_matieres` (`id_matiere`),
   KEY `FK_seances_professeurs` (`id_prof`),
   KEY `FK_seances_groups` (`id_group`),
-  CONSTRAINT `fk_seances_semestres` FOREIGN KEY (`id_semestre`) REFERENCES `semestres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `FK_seances_semestres` (`id_semestre`),
+  CONSTRAINT `FK_seances_semestres` FOREIGN KEY (`id_semestre`) REFERENCES `semestres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_seances_groups` FOREIGN KEY (`id_group`) REFERENCES `groupes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_seances_matieres` FOREIGN KEY (`id_matiere`) REFERENCES `matieres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_seances_professeurs` FOREIGN KEY (`id_prof`) REFERENCES `professeurs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

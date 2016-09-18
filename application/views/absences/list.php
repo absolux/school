@@ -30,31 +30,30 @@
 <table class="table -table-bordered table-condensed table-striped table-hover" style="margin-bottom: 10px">
   <thead>
     <tr>
-        <th>Code Etudiant</th>
-        <th>Nom Etudiant</th>
+        <th>Etudiant</th>
         <th>Semestre</th>
         <th>Matière</th>
         <th>Date</th>
         <!--<th>Date fin</th>-->
+        <th></th>
     </tr>
   </thead>
   <tbody>
     <?php if (! count($records) ): ?>
-    <tr class="warning text-center"><td colspan="4">Aucun résultat trouvé</td></tr>
+    <tr class="warning text-center"><td colspan="7">Aucun résultat trouvé</td></tr>
     <?php else: ?>
     <?php foreach ($records as $item) : ?>
         <tr>
-          <td><?php echo $item->code ?></td>
-          <td><?php echo "{$item->prenom} {$item->nom}" ?></td>
+          <td><?php echo "{$item->code} {$item->prenom} {$item->nom}" ?></td>
           <td><?php echo $item->semestre ?></td>
           <td><?php echo $item->matiere ?></td>
           <td><?php echo date('Y-m-d', strtotime($item->date_debut)) ?></td>
           <!--<td><?php //echo $item->date_fin ?></td>-->
-          <!--<td class="text-right" width="100px">
+          <td class="text-right" width="100px">
               <?php //echo anchor('absences/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info"'); ?>
               <?php //echo anchor('absences/update/'.$item->id, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
-              <?php //echo anchor('absences/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
-          </td>-->
+              <?php echo anchor('absences/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
+          </td>
     </tr>
     <?php endforeach; ?>
     <?php endif; ?>
@@ -90,7 +89,7 @@
         <div class="form-group">
           <!--<label for="id_group" class="col-sm-4 control-label">Groupe</label>-->
           <div class="col-sm-offset-2 col-sm-8">
-            <?php echo form_dropdown("id_group", ['' => "Sélectionnez le groupe d'étudiant"] + $groupes, NULL, 'id=id_group class="form-control" required') ?>
+            <?php echo form_dropdown("id_group", ['' => "Sélectionnez une classe"] + $groupes, NULL, 'id=id_group class="form-control" required') ?>
           </div>
         </div>
         

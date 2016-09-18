@@ -107,7 +107,12 @@ class Absence extends CI_Model
   // delete data
   function delete($id)
   {
-      return $this->db->where($this->pk, $id)->delete($this->table);
+    return $this->db->where($this->pk, $id)->delete($this->table);
+  }
+  
+  // change status to `present`
+  function setPresent($id) {
+    return $this->db->set('statut', 1)->where($this->pk, $id)->update($this->table);
   }
   
 }

@@ -142,19 +142,19 @@ class Absences extends MY_Controller
   //   }
   // }
 
-  // public function delete($id) 
-  // {
-  //   $row = $this->Absence->get_by_id($id);
+  public function delete($id) 
+  {
+    $row = $this->Absence->get_by_id($id);
 
-  //   if ($row) {
-  //     $this->Absence->delete($id);
-  //     $this->session->set_flashdata('message', 'Suppression réussie');
-  //     redirect(site_url('absences'));
-  //   } else {
-  //     $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-  //     redirect(site_url('absences'));
-  //   }
-  // }
+    if ($row) {
+      $this->Absence->setPresent($id);
+      $this->session->set_flashdata('message', 'Suppression réussie');
+      redirect(site_url('absences'));
+    } else {
+      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
+      redirect(site_url('absences'));
+    }
+  }
 
   public function _rules() 
   {
