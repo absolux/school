@@ -67,6 +67,9 @@ class Absences extends MY_Controller
       return;
     }
     
+    $active_semestre = $this->Semestre->get_active();
+    $active_semestre = $active_semestre ? $active_semestre->id : NULL;
+    
     $data = array(
       'button' => 'Créer',
       'content_view' => 'absences/form',
@@ -74,7 +77,7 @@ class Absences extends MY_Controller
       
       'id' => set_value('id'),
       'id_matiere' => set_value('id_matiere'),
-      'id_semestre' => set_value('id_semestre'),
+      'id_semestre' => set_value('id_semestre', $active_semestre),
       'id_group' => set_value('id_group', $group_id),
       'date_debut' => set_value('date_debut'),
       // 'date_fin' => set_value('date_fin'),

@@ -103,5 +103,9 @@ class Semestre extends CI_Model
   function deactivateAll() {
     return $this->db->set('active', FALSE)->update($this->table);
   }
+  
+  function get_active() {
+    return $this->db->limit(1)->select(['id', 'label'])->where('active', TRUE)->get($this->table)->first_row();
+  }
 
 }
