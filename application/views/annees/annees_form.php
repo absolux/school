@@ -33,17 +33,19 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <!--<div class="form-group">
     <label for="active" class="col-sm-2 control-label"></label>
     <div class="col-sm-3">
-      <?php echo form_hidden("active", '0') ?>
+      <?php //echo form_hidden("active", '0') ?>
       <label>
-        <?php echo form_checkbox("active", '1', $active == 1, 'id=active') ?>
+        <?php //echo form_checkbox("active", '1', $active == 1, 'id=active') ?>
         Active ?
       </label>
-      <?php echo form_error("active", '<span class="help-block">', '</span>') ?>
+      <?php //echo form_error("active", '<span class="help-block">', '</span>') ?>
     </div>
-  </div>
+  </div>-->
+  
+  <?php echo form_hidden('active', $active) ?>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

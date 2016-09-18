@@ -14,17 +14,17 @@
     
     <div class="col-md-4 text-center"></div>
     
-    <div class="col-md-4 text-right">
-      <form action="<?php echo site_url('annees-scolaires/index'); ?>" class="form-inline" method="get">
+    <!--<div class="col-md-4 text-right">
+      <form action="<?php //echo site_url('annees-scolaires/index'); ?>" class="form-inline" method="get">
         <div class="form-group">
             <input type="text" class="form-control" name="q" value="<?php echo $q; ?>" placeholder="Rechercher">
         </div>
         <span class="form-group-btn">
-            <?php echo ($q <> '') ? anchor('annees-scolaires', '<i class="glyphicon glyphicon-remove"></i>', 'class="btn btn-default" title="Annuler le filtre"') : '' ?>
+            <?php //echo ($q <> '') ? anchor('annees-scolaires', '<i class="glyphicon glyphicon-remove"></i>', 'class="btn btn-default" title="Annuler le filtre"') : '' ?>
             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
         </span>
       </form>
-    </div>
+    </div>-->
 </div>
 
 <table class="table -table-bordered table-condensed table-striped table-hover" style="margin-bottom: 10px">
