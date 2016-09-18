@@ -145,6 +145,7 @@ DROP TABLE IF EXISTS `seances`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `seances` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) DEFAULT NULL,
   `date_debut` datetime DEFAULT NULL,
   `date_fin` datetime DEFAULT NULL,
   `id_matiere` int(11) NOT NULL,

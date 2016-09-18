@@ -77,6 +77,7 @@ class Absence extends CI_Model
       "{$this->table}.*",
       'matieres.label as matiere',
       'semestres.label as semestre',
+      'seances.title as seance_title',
       'seances.date_debut', 'seances.date_fin',
       'etudiants.code', 'etudiants.nom', 'etudiants.prenom',
     ]);

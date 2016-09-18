@@ -80,6 +80,7 @@ class Absences extends MY_Controller
       'id_semestre' => set_value('id_semestre', $active_semestre),
       'id_group' => set_value('id_group', $group_id),
       'date_debut' => set_value('date_debut'),
+      'title' => set_value('title', "Séance 1"),
       // 'date_fin' => set_value('date_fin'),
       // 'id_prof' => set_value('id_prof'),
       'matieres' => $this->Matiere->get_list(),
@@ -98,7 +99,7 @@ class Absences extends MY_Controller
       $this->create();
     } else {
       $this->Seance->insert($this->input->post([
-        'id_matiere', 'id_group', 'date_debut', 'presence', 'id_semestre'
+        'id_matiere', 'id_group', 'date_debut', 'presence', 'id_semestre', 'title'
       ], TRUE));
 
       $this->session->set_flashdata('message', 'Création réussie');

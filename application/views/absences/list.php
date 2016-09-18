@@ -33,6 +33,7 @@
         <th>Etudiant</th>
         <th>Semestre</th>
         <th>Matière</th>
+        <th>Séance</th>
         <th>Date</th>
         <!--<th>Date fin</th>-->
         <th></th>
@@ -47,6 +48,7 @@
           <td><?php echo "{$item->code} {$item->prenom} {$item->nom}" ?></td>
           <td><?php echo $item->semestre ?></td>
           <td><?php echo $item->matiere ?></td>
+          <td><?php echo $item->seance_title ?></td>
           <td><?php echo date('Y-m-d', strtotime($item->date_debut)) ?></td>
           <!--<td><?php //echo $item->date_fin ?></td>-->
           <td class="text-right" width="100px">

@@ -4,6 +4,14 @@
 <?php echo form_open($action, 'class="form-horizontal"', ['id_group' => $id_group]) ?>
   
   <div class="form-group">
+    <label for="title" class="col-sm-2 control-label">Libellé</label>
+    <div class="col-sm-6 <?php echo form_error("title") ? 'has-error' : '' ?>">
+      <?php echo form_input("title", $title, 'class="form-control" id="title"') ?>
+      <?php echo form_error("title", '<span class="help-block">', '</span>') ?>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="id_matiere" class="col-sm-2 control-label">Matière</label>
     <div class="col-sm-6 -has-warning <?php echo form_error("id_matiere") ? 'has-error' : '' ?>">
       <?php echo form_dropdown("id_matiere", ['' => "Sélectionnez"] + $matieres, $id_matiere, 'id=id_matiere class="form-control" required') ?>
