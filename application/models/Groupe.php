@@ -99,8 +99,11 @@ class Groupe extends CI_Model
   
   function get_list()
   {
-    // TODO set the current year criteria
-    $results = $this->db->select(['id', 'label'])->get($this->table)->result();
+    $this->db->join('annee_scolaires as annees', "annees.id = {$this->table}.id_annee and annees.active = 1");
+    
+    $this->db->select(["{$this->table}.id", "{$this->table}.label"]);
+    
+    $results = $this->db->get($this->table)->result();
     
     return array_reduce($results, function ($memo, $item) {
       $memo[$item->id] = $item->label;
