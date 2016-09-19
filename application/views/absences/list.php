@@ -53,7 +53,7 @@
           <!--<td><?php //echo $item->date_fin ?></td>-->
           <td class="text-right" width="100px">
               <?php //echo anchor('absences/read/'.$item->id,'<i class="glyphicon glyphicon-eye-open"></i>', 'class="btn btn-xs btn-info"'); ?>
-              <?php //echo anchor('absences/update/'.$item->id, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
+              <?php echo anchor('absences/update/'.$item->id_seance, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
               <?php echo anchor('absences/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
           </td>
     </tr>

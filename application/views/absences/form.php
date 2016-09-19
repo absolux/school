@@ -1,7 +1,7 @@
 
 <h3>Saisir la présence</h3>
 
-<?php echo form_open($action, 'class="form-horizontal"', ['id_group' => $id_group]) ?>
+<?php echo form_open($action, 'class="form-horizontal"', ['id_group' => $id_group, 'id' => $id]) ?>
   
   <div class="form-group">
     <label for="title" class="col-sm-2 control-label">Libellé</label>
@@ -58,13 +58,13 @@
         </td>
         <td style="width: 80px;">
           <label class="radio-inline">
-            <input type="radio" name="presence[<?php echo $i ?>][statut]" value="1" checked />
+            <?php echo form_radio("presence[{$i}][statut]", 1, isset($presence) ? (bool) $presence[$item->id] : TRUE) ?>
             Présent
           </label>
         </td>
         <td style="width: 80px;">
           <label class="radio-inline">
-            <input type="radio" name="presence[<?php echo $i ?>][statut]" value="0" />
+            <?php echo form_radio("presence[{$i}][statut]", 0, isset($presence) ? !(bool) $presence[$item->id] : FALSE) ?>  
             Absent
           </label>
         </td>

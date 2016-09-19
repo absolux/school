@@ -95,7 +95,13 @@ class Seance extends CI_Model
   }
   
   function get_presence($id_seance) {
+    $presence = $this->db->get_where('absences', ['id_seance' => $id_seance])->result();
     
+    return array_reduce($presence, function ($memo, $item) {
+      $memo[$item->id_etudiant] = $item->statut;
+      
+      return $memo;
+    }, []);
   }
   
   function sync_presence($id, $presence) {

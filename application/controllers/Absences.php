@@ -107,44 +107,52 @@ class Absences extends MY_Controller
     }
   }
 
-  // public function update($id_seance) 
-  // {
-  //   $row = $this->Seance->get_by_id($id_seance);
+  public function update($id_seance) 
+  {
+    $row = $this->Seance->get_by_id($id_seance);
 
-  //   if ($row) {
-  //     $data = array(
-  //       'button' => 'Modifier',
-  //       'content_view' => 'absences/form',
-  //       'action' => site_url('absences/update_action'),
-  //       'id' => set_value('id', $row->id),
-  //       'label' => set_value('label', $row->label),
-  //       'description' => set_value('description', $row->description),
-  //       );
+    if ($row) {
+      $data = array(
+        'button' => 'Modifier',
+        'content_view' => 'absences/form',
+        'action' => site_url('absences/update_action'),
+        
+        'id' => set_value('id', $row->id),
+        'id_matiere' => set_value('id_matiere', $row->id_matiere),
+        'id_semestre' => set_value('id_semestre', $row->id_semestre),
+        'id_group' => set_value('id_group', $row->id_group),
+        'date_debut' => set_value('date_debut', date('Y-m-d', strtotime($row->date_debut))),
+        'title' => set_value('title', $row->title),
+        
+        'matieres' => $this->Matiere->get_list(),
+        'semestres' => $this->Semestre->get_list(),
+        'etudiants' => $this->Groupe->get_etudiants($row->id_group),
+        'presence' => $this->Seance->get_presence($id_seance),
+      );
       
-  //     $this->load->view('template/layout', $data);
-  //   } else {
-  //     $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-  //     redirect(site_url('absences'));
-  //   }
-  // }
+      $this->load->view('template/layout', $data);
+    } else {
+      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
+      redirect(site_url('absences'));
+    }
+  }
 
-  // public function update_action() 
-  // {
-  //   $this->_rules();
+  public function update_action() 
+  {
+    $this->_rules();
 
-  //   if ($this->form_validation->run() == FALSE) {
-  //     $this->update($this->input->post('id', TRUE));
-  //   } else {
-  //     $data = array(
-  //       'label' => $this->input->post('label', TRUE),
-  //       'description' => $this->input->post('description', TRUE),
-  //     );
+    if ($this->form_validation->run() == FALSE) {
+      $this->update($this->input->post('id', TRUE));
+    } else {
+      $data = $this->input->post([
+        'id_matiere', 'id_group', 'date_debut', 'presence', 'id_semestre', 'title'
+      ], TRUE);
 
-  //     $this->Absence->update($this->input->post('id', TRUE), $data);
-  //     $this->session->set_flashdata('message', 'Modifications appliquées');
-  //     redirect(site_url('absences'));
-  //   }
-  // }
+      $this->Seance->update($this->input->post('id', TRUE), $data);
+      $this->session->set_flashdata('message', 'Modifications appliquées');
+      redirect(site_url('absences'));
+    }
+  }
 
   public function delete($id) 
   {
