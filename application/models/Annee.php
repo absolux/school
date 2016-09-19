@@ -92,6 +92,10 @@ class Annee extends CI_Model
     }, []);
   }
   
+  function get_active() {
+    return $this->db->limit(1)->select(['id', 'label'])->where('active', TRUE)->get($this->table)->first_row();
+  }
+  
   // activate the given year id
   function activate($id) {
     return $this->update($id, ['active' => TRUE]);

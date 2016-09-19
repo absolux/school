@@ -58,12 +58,14 @@ class Groupes extends MY_Controller
   
   public function create() 
   {
+    $active_year = $this->Annee->get_active();
+    
     $data = array(
       'button' => 'Créer',
       'action' => site_url('groupes/create_action'),
       'id' => set_value('id'),
       'label' => set_value('label'),
-      'id_annee' => set_value('id_annee'),
+      'id_annee' => set_value('id_annee', $active_year ? $active_year->id : NULL),
       // 'id_niveau' => set_value('id_niveau'),
       'id_filiere' => set_value('id_filiere'),
       'content_view' => 'groupes/groupes_form',

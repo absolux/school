@@ -54,13 +54,15 @@ class Semestres extends MY_Controller
 
   public function create() 
   {
+    $active_year = $this->Annee->get_active();
+    
     $data = array(
       'button' => 'Créer',
       'content_view' => 'semestres/semestres_form',
       'action' => site_url('semestres/create_action'),
       'id' => set_value('id'),
       'label' => set_value('label'),
-      'id_annee' => set_value('id_annee'),
+      'id_annee' => set_value('id_annee', $active_year ? $active_year->id : NULL),
       
       'annees' => $this->Annee->get_active_list(),
     );
