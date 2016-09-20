@@ -25,7 +25,7 @@ class Matieres extends MY_Controller
     
     $matieres = $this->Matiere->get_limit_data($this->per_page, $start, $q);
     
-    $this->load->view('template/layout', [
+    $this->load->view($this->layout, [
       'q' => $q,
       'start' => $start,
       'records' => $matieres,
@@ -39,107 +39,105 @@ class Matieres extends MY_Controller
   {
     $row = $this->Matiere->get_by_id($id);
     
-    if ( $row ) {
-      $this->load->view('template/layout', [
-        'record' => $row,
-        'content_view' => 'matieres/matieres_read',
-      ]);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('matieres'));
+    if (! $row ) {
+      $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+      return redirect(site_url('matieres'));
     }
+    
+    $this->load->view($this->layout, [
+      'content_view' => 'matieres/matieres_read',
+      'action' => site_url('matieres/update_action'),
+      
+      'id' => set_value('id', $row->id),
+      'label' => set_value('label', $row->label),
+      'description' => set_value('description', $row->description),
+    ]);
   }
 
-  public function create() 
-  {
-    $data = array(
-      'button' => 'Créer',
-      'content_view' => 'matieres/matieres_form',
-      'action' => site_url('matieres/create_action'),
-      'id' => set_value('id'),
-      'label' => set_value('label'),
-      'description' => set_value('description'),
-    );
+  // public function create() 
+  // {
+  //   $data = array(
+  //     'button' => 'Créer',
+  //     'content_view' => 'matieres/matieres_form',
+  //     'action' => site_url('matieres/create_action'),
+  //     'id' => set_value('id'),
+  //     'label' => set_value('label'),
+  //     'description' => set_value('description'),
+  //   );
     
-    $this->load->view('template/layout', $data);
-  }
+  //   $this->load->view('template/layout', $data);
+  // }
 
   public function create_action() 
   {
     $this->_rules();
 
-    if ($this->form_validation->run() == FALSE) {
-      $this->create();
-    } else {
-      $data = array(
-        'label' => $this->input->post('label',TRUE),
-        'description' => $this->input->post('description',TRUE),
-      );
-
-      $this->Matiere->insert($data);
-      $this->session->set_flashdata('message', 'Création réussie');
-      redirect(site_url('matieres'));
-    }
+    if ( $this->form_validation->run() == FALSE ) return $this->index();
+    
+    $data = $this->input->post(['label'], TRUE);
+    
+    if ( $this->Matiere->insert($data) )
+      $this->session->set_flashdata('success', 'Création réussie');
+    
+    redirect(site_url('matieres'));
   }
 
-  public function update($id) 
-  {
-    $row = $this->Matiere->get_by_id($id);
+  // public function update($id) 
+  // {
+  //   $row = $this->Matiere->get_by_id($id);
 
-    if ($row) {
-      $data = array(
-        'button' => 'Modifier',
-        'content_view' => 'matieres/matieres_form',
-        'action' => site_url('matieres/update_action'),
-        'id' => set_value('id', $row->id),
-        'label' => set_value('label', $row->label),
-        'description' => set_value('description', $row->description),
-        );
+  //   if ($row) {
+  //     $data = array(
+  //       'button' => 'Modifier',
+  //       'content_view' => 'matieres/matieres_form',
+  //       'action' => site_url('matieres/update_action'),
+  //       'id' => set_value('id', $row->id),
+  //       'label' => set_value('label', $row->label),
+  //       'description' => set_value('description', $row->description),
+  //       );
       
-      $this->load->view('template/layout', $data);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('matieres'));
-    }
-  }
+  //     $this->load->view('template/layout', $data);
+  //   } else {
+  //     $this->session->set_flashdata('message', 'Aucun résultat trouvé');
+  //     redirect(site_url('matieres'));
+  //   }
+  // }
 
   public function update_action() 
   {
     $this->_rules();
 
-    if ($this->form_validation->run() == FALSE) {
-      $this->update($this->input->post('id', TRUE));
-    } else {
-      $data = array(
-        'label' => $this->input->post('label', TRUE),
-        'description' => $this->input->post('description', TRUE),
-      );
+    $id = $this->input->post('id', TRUE);
+    
+    if ($this->form_validation->run() == FALSE) return $this->read($id);
+    
+    $data = $this->input->post(['label', 'description'], TRUE);
 
-      $this->Matiere->update($this->input->post('id', TRUE), $data);
-      $this->session->set_flashdata('message', 'Modifications appliquées');
-      redirect(site_url('matieres'));
-    }
+    if ( $this->Matiere->update($id, $data) )
+      $this->session->set_flashdata('success', 'Modifications appliquées');
+    
+    redirect(site_url('matieres'));
   }
 
   public function delete($id) 
   {
     $row = $this->Matiere->get_by_id($id);
 
-    if ($row) {
-      $this->Matiere->delete($id);
-      $this->session->set_flashdata('message', 'Suppression réussie');
-      redirect(site_url('matieres'));
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('matieres'));
+    if (! $row ) {
+      $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+    } 
+    else if ( $this->Matiere->delete($id) ) {
+      $this->session->set_flashdata('success', 'Suppression réussie');
     }
+    
+    redirect(site_url('matieres'));
   }
 
   public function _rules() 
   {
     $this->load->library('form_validation');
     
-    $this->form_validation->set_rules('label', 'nom', 'trim|required');
+    $this->form_validation->set_rules('label', 'libellé', 'trim|required');
     $this->form_validation->set_rules('description', 'description', 'trim');
     $this->form_validation->set_rules('id', 'id', 'trim');
   }
