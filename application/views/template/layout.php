@@ -22,6 +22,14 @@
     .navbar-brand {
       min-width: 150px;
     }
+    
+    .navbar-default .dropdown-menu>.active>a,
+    .navbar-default .dropdown-menu>.active>a:hover,
+    .navbar-default .dropdown-menu>.active>a:focus {
+      text-decoration: none;
+      color: #141414;
+      background-color: #eeeeee;
+    }
   </style>
   
   <!-- Scripts -->
