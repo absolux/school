@@ -116,7 +116,7 @@ class Matieres extends MY_Controller
     if ( $this->Matiere->update($id, $data) )
       $this->session->set_flashdata('success', 'Modifications appliquées');
     
-    redirect(site_url('matieres'));
+    redirect(site_url("matieres/read/{$id}"));
   }
 
   public function delete($id) 

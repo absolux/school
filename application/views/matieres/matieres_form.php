@@ -12,7 +12,7 @@
   <div class="form-group">
     <label for="description" class="col-sm-2 control-label">Description</label>
     <div class="col-sm-6 <?php echo form_error("description") ? 'has-error' : '' ?>">
-      <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+      <textarea class="form-control" id="description" name="description" rows="4"><?php echo $description ?></textarea>
       <?php echo form_error("description", '<span class="help-block">', '</span>') ?>
     </div>
   </div>
