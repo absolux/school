@@ -12,12 +12,15 @@
 
   <style>
   	body {
-  		/* font-family: verdana; */
-  		/*background-color:#F5F5F5*/
+  		background-color: #eee;
   	}
     
-    optgroup {
-      background: #ddd;
+    h3, .h3 {
+      margin-bottom: 34px;
+    }
+    
+    .navbar-brand {
+      min-width: 150px;
     }
   </style>
   
@@ -30,27 +33,11 @@
   
 </head>
 <body>
-
-	<div class="container-fluid">
-		<div class="row">
-			<?php $this->load->view('template/header'); ?>
-		</div>
-
-		<div class="row">
-
-			<div class="col-md-2" >
-			<?php $this->load->view('template/sidebar'); ?>
-
-			</div>
-			<div class="col-md-10">
-				<?php $this->load->view($content_view); ?>
-			</div>
-		</div>
-
-		<div class="row">
-					<?php $this->load->view('template/footer'); ?>
-		</div>
-
+  
+  <?php $this->load->view('template/header'); ?>
+	
+  <div class="container">
+		<?php $this->load->view($content_view); ?>
 	</div>
 
 </body>
