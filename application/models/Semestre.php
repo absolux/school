@@ -93,15 +93,15 @@ class Semestre extends CI_Model
   }
   
   // activate the given semester id
-  function activate($id) {
-    $this->deactivateAll();
+  function activate($id, $id_annee) {
+    $this->deactivateAll($id_annee);
     
     return $this->update($id, ['active' => TRUE]);
   }
   
   // deactivate all semestres
-  function deactivateAll() {
-    return $this->db->set('active', FALSE)->update($this->table);
+  function deactivateAll($id_annee) {
+    return $this->db->set('active', FALSE)->where('id_annee', $id_annee)->update($this->table);
   }
   
   function get_active() {

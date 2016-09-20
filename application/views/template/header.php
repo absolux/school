@@ -23,18 +23,15 @@
         <li class="<?php if ( strpos(uri_string(), 'classes') === 0 ) echo 'active' ?>">
           <?php echo anchor("classes", "Classes") ?>
         </li>
-        <li class="dropdown <?php if ( preg_match('/^(annees-scolaires|semestres|filieres|matieres)/', uri_string()) ) echo 'active' ?>">
+        <li class="dropdown <?php if ( preg_match('/^(annees-scolaires|filieres|matieres)/', uri_string()) ) echo 'active' ?>">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            Configuration <span class="caret"></span>
+            Administration <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li class="<?php if ( strpos(uri_string(), 'annees-scolaires') === 0 ) echo 'active' ?>">
               <?php echo anchor("annees-scolaires", "Années scolaires") ?>
             </li>
-            <li class="<?php if ( strpos(uri_string(), 'semestres') === 0 ) echo 'active' ?>">
-              <?php echo anchor("semestres", "Semestres") ?>
-            </li>
-            <li role="separator" class="divider"></li>
+            
             <li class="<?php if ( strpos(uri_string(), 'filieres') === 0 ) echo 'active' ?>">
               <?php echo anchor("filieres", "Filières") ?>
             </li>

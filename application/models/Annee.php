@@ -53,7 +53,20 @@ class Annee extends CI_Model
   {
     if ( $data['active'] ) $this->deactivateAll();
     
-    return $this->db->insert($this->table, $data);
+    $result = $this->db->insert($this->table, $data);
+    
+    if ( $result ) {
+      $id = $this->db->insert_id();
+      
+      $this->load->model('Semestre');
+      
+      $this->db->insert_batch($this->Semestre->table, [
+        ['label' => 'Semestre 1', 'active' => TRUE, 'id_annee' => $id],
+        ['label' => 'Semestre 2', 'active' => FALSE, 'id_annee' => $id]
+      ]);
+    }
+    
+    return $id;
   }
 
   // update data
@@ -104,6 +117,10 @@ class Annee extends CI_Model
   // deactivate all academic years
   function deactivateAll() {
     return $this->db->set('active', FALSE)->update($this->table);
+  }
+  
+  function get_semestres($id) {
+    return $this->db->where('id_annee', $id)->get('semestres')->result();
   }
 
 }
