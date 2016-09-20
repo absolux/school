@@ -66,7 +66,7 @@ class Annee extends CI_Model
       ]);
     }
     
-    return $id;
+    return $result;
   }
 
   // update data

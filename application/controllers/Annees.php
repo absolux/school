@@ -80,10 +80,10 @@ class Annees extends MY_Controller
     
     $data = $this->input->post(['label', 'active'], TRUE);
     
-    if ( $id = $this->Annee->insert($data) )
+    if ( $this->Annee->insert($data) )
       $this->session->set_flashdata('success', 'Création réussie');
     
-    redirect(site_url("annees-scolaires/read/{$id}"));
+    redirect(site_url("annees-scolaires"));
   }
 
   // public function update($id) 
