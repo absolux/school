@@ -26,7 +26,7 @@ class Professeurs extends MY_Controller
     
     $professeurs = $this->Professeur->get_limit_data($this->per_page, $start, $q);
     
-    $this->load->view('template/layout', [
+    $this->load->view($this->layout, [
       'q' => $q,
       'start' => $start,
       'records' => $professeurs,

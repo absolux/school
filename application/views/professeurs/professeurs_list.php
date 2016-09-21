@@ -17,7 +17,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <p class="-lead">
-          Créer une nouveau professeur
+          Créer un nouveau professeur
         </p>
         
         <?php echo form_open('professeurs/create_action', 'class="-form-horizontal"') ?>
@@ -46,8 +46,8 @@
           <thead>
             <tr>
               <th>Nom complet</th>
-              <th class="hidden-xs">E-mail</th>
-              <th class="hidden-xs hidden-sm">Téléphone</th>
+              <th class="hidden-xs hidden-sm">E-mail</th>
+              <th class="hidden-xs">Téléphone</th>
               <th></th>
             </tr>
           </thead>
@@ -58,8 +58,8 @@
             <?php foreach ($records as $item) : ?>
             <tr>
               <td><?php echo anchor("professeurs/read/{$item->id}", $item->prenom . ' ' . $item->nom) ?></td>
-              <td class="hidden-xs"><?php echo $item->email ?></td>
-              <td class="hidden-xs hidden-sm"><?php echo $item->tel ?></td>
+              <td class="hidden-xs hidden-sm"><?php echo $item->email ?></td>
+              <td class="hidden-xs"><?php echo $item->tel ?></td>
               <td class="text-right" width="100px">
                 <?php echo anchor('professeurs/delete/'.$item->id, '<i class="glyphicon glyphicon-remove"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
               </td>
