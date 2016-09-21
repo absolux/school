@@ -1,6 +1,4 @@
 
-<h3><?php echo $button ?> un professeur</h3>
-
 <?php echo form_open($action, 'class="form-horizontal"', ['id' => $id]) ?>
   
   <!--<div class="form-group">
@@ -10,6 +8,25 @@
       <?php //echo form_error("code", '<span class="help-block">', '</span>') ?>
     </div>
   </div>-->
+
+  <div class="form-group">
+    <!--<label for ="sexe" class="col-sm-2 control-label">Sexe</label>-->
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="radio-inline">
+        <label>
+          <?php echo form_radio("sexe", 'M', ($sexe == 'M'), 'id="sexe"') ?>
+          Homme
+        </label>
+      </div>
+      <div class="radio-inline">
+        <label>
+          <?php echo form_radio("sexe", 'F', ($sexe == 'F'), 'id="sexe"') ?>
+          Femme
+        </label>
+      </div>
+      <?php echo form_error("sexe", '<span class="help-block">', '</span>') ?>
+    </div>
+  </div>
 
   <div class="form-group">
     <label for="prenom" class="col-sm-2 control-label">Prénom</label>
@@ -30,27 +47,8 @@
   <div class="form-group">
     <label for="email" class="col-sm-2 control-label">Adresse E-mail</label>
     <div class="col-sm-6 <?php echo form_error("email") ? 'has-error' : '' ?>">
-      <input type="text" class="form-control" id="email" name="email" value="<?php echo $email; ?>" />
+      <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>" />
       <?php echo form_error("email", '<span class="help-block">', '</span>') ?>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for ="sexe" class="col-lg-2 control-label">Sexe</label>
-    <div class="col-lg-10">
-      <div class="radio-inline">
-        <label>
-          <?php echo form_radio("sexe", 'M', ($sexe == 'M'), 'id="sexe"') ?>
-          Masculin
-        </label>
-      </div>
-      <div class="radio-inline">
-        <label>
-          <?php echo form_radio("sexe", 'F', ($sexe == 'F'), 'id="sexe"') ?>
-          Féminin
-        </label>
-      </div>
-      <?php echo form_error("sexe", '<span class="help-block">', '</span>') ?>
     </div>
   </div>
 
@@ -72,8 +70,10 @@
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
-      <?php echo anchor('professeurs', 'Annuler', 'class="btn btn-default"') ?>
+      <button type="submit" class="btn btn-default">
+        <i class="glyphicon glyphicon-save"></i>
+        Modifier
+      </button>
     </div>
   </div>
 

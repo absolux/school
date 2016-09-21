@@ -8,6 +8,7 @@ class Professeurs extends MY_Controller
   function __construct()
   {
     parent::__construct();
+    
     $this->load->model('Professeur');
   }
 
@@ -39,116 +40,98 @@ class Professeurs extends MY_Controller
   {
     $row = $this->Professeur->get_by_id($id);
     
-    if ( $row ) {
-      $this->load->view('template/layout', [
-        'record' => $row,
-        'content_view' => 'professeurs/professeurs_read',
-      ]);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('professeurs'));
+    if (! $row ) {
+      $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+      return redirect(site_url('professeurs'));
     }
+    
+    $this->load->view($this->layout, [
+      'action' => site_url('professeurs/update_action'),
+      'content_view' => 'professeurs/professeurs_read',
+      
+      'id' => set_value('id', $row->id),
+      'nom' => set_value('nom', $row->nom),
+      'prenom' => set_value('prenom', $row->prenom),
+      'email' => set_value('email', $row->email),
+      'tel' => set_value('tel', $row->tel),
+      'cin' => set_value('cin', $row->cin),
+      'sexe' => set_value('sexe', $row->sexe),
+    ]);
   }
 
-  public function create() 
-  {
-    $data = array(
-      'button' => 'Créer',
-      'action' => site_url('professeurs/create_action'),
-      'id' => set_value('id'),
-      'nom' => set_value('nom'),
-      'email' => set_value('email'),
-      'prenom' => set_value('prenom'),
-      'tel' => set_value('tel'),
-      'cin' => set_value('cin'),
-      'sexe' => set_value('sexe'),
-      'content_view' => 'professeurs/professeurs_form'
-    );
+  // public function create() 
+  // {
+  //   $data = array(
+  //     'button' => 'Créer',
+  //     'action' => site_url('professeurs/create_action'),
+  //     'id' => set_value('id'),
+  //     'nom' => set_value('nom'),
+  //     'email' => set_value('email'),
+  //     'prenom' => set_value('prenom'),
+  //     'tel' => set_value('tel'),
+  //     'cin' => set_value('cin'),
+  //     'sexe' => set_value('sexe'),
+  //     'content_view' => 'professeurs/professeurs_form'
+  //   );
     
-    $this->load->view('template/layout', $data);
-  }
+  //   $this->load->view('template/layout', $data);
+  // }
 
   public function create_action() 
   {
     $this->_rules();
 
-    if ($this->form_validation->run() == FALSE) {
-      $this->create();
-    } else {
-      $data = array(
-        'nom' => $this->input->post('nom',TRUE),
-        'prenom' => $this->input->post('prenom',TRUE),
-        'email' => $this->input->post('email',TRUE),
-        'tel' => $this->input->post('tel',TRUE),
-        'cin' => $this->input->post('cin',TRUE),
-        'sexe' => $this->input->post('sexe',TRUE),
-      );
-
-      $this->Professeur->insert($data);
-      $this->session->set_flashdata('message', 'Création réussie');
-      redirect(site_url('professeurs'));
-    }
+    if ($this->form_validation->run() == FALSE) return $this->index();
+    
+    $data = $this->input->post(['nom', 'prenom'], TRUE);
+    
+    if ( $this->Professeur->insert($data) )
+      $this->session->set_flashdata('success', 'Création réussie');
+    
+    redirect(site_url('professeurs'));
   }
 
-  public function update($id) 
-  {
-    $row = $this->Professeur->get_by_id($id);
+  // public function update($id) 
+  // {
+  //   $row = $this->Professeur->get_by_id($id);
 
-    if ($row) {
-      $data = array(
-        'button' => 'Modifier',
-        'action' => site_url('professeurs/update_action'),
-        'id' => set_value('id', $row->id),
-        'nom' => set_value('nom', $row->nom),
-        'prenom' => set_value('prenom', $row->prenom),
-        'email' => set_value('email', $row->email),
-        'tel' => set_value('tel', $row->tel),
-        'cin' => set_value('cin', $row->cin),
-        'sexe' => set_value('sexe', $row->sexe),
-        'content_view' => 'professeurs/professeurs_form'
-        );
+  //   if ($row) {
+  //     $data = array(
+  //       'button' => 'Modifier',
+        
+  //       );
       
-      $this->load->view('template/layout', $data);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('professeurs'));
-    }
-  }
+  //     $this->load->view('template/layout', $data);
+  //   } else {
+  //     $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+  //     redirect(site_url('professeurs'));
+  //   }
+  // }
 
   public function update_action() 
   {
     $this->_rules();
+    
+    $id = $this->input->post('id', TRUE);
 
-    if ($this->form_validation->run() == FALSE) {
-      $this->update($this->input->post('id', TRUE));
-    } else {
-      $data = array(
-        'nom' => $this->input->post('nom', TRUE),
-        'prenom' => $this->input->post('prenom', TRUE),
-        'tel' => $this->input->post('tel', TRUE),
-        'cin' => $this->input->post('cin', TRUE),
-        'sexe' => $this->input->post('sexe', TRUE),
-        'email' => $this->input->post('email', TRUE),
-      );
+    if ($this->form_validation->run() == FALSE) return $this->read($id);
+    
+    $data = $this->input->post(['nom', 'prenom', 'cin', 'email', 'tel', 'sexe'], TRUE);
 
-      $this->Professeur->update($this->input->post('id', TRUE), $data);
-      $this->session->set_flashdata('message', 'Modifications appliquées');
-      redirect(site_url('professeurs'));
-    }
+    if ( $this->Professeur->update($id, $data) )
+      $this->session->set_flashdata('success', 'Modifications appliquées');
+    
+    redirect(site_url("professeurs/read/{$id}"));
   }
 
   public function delete($id) 
   {
     $row = $this->Professeur->get_by_id($id);
 
-    if ($row) {
-      $this->Professeur->delete($id);
-      $this->session->set_flashdata('message', 'Suppression réussie');
-      redirect(site_url('professeurs'));
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('professeurs'));
-    }
+    if (! $row ) $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+    else if ( $this->Professeur->delete($id) ) $this->session->set_flashdata('success', 'Suppression réussie');
+    
+    redirect(site_url('professeurs'));
   }
 
   public function _rules() 
