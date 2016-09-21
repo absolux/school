@@ -4,10 +4,12 @@
   <div class="form-group">
     <div class="input-group">
       <input type="text" class="form-control" name="q" value="<?php echo $q; ?>" placeholder="Rechercher">
-      <span class="input-group-btn">
-        <?php echo (isset($q) AND $q <> '') ? anchor(uri_string(), '<i class="glyphicon glyphicon-remove"></i>', 'class="btn btn-default" title="Annuler le filtre"') : '' ?>
-        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-      </span>
+      <span class="input-group-addon" style="padding-right: 0;"><i class="glyphicon glyphicon-search"></i></span>
     </div>
   </div>
 </form>
+
+<?php if ( isset($q) AND $q != "" ): ?>
+<br />
+<a href="<?php echo uri_string() ?>" class="btn btn-block btn-default">Annuler le filtre</a>
+<?php endif; ?>
