@@ -25,7 +25,7 @@ class Etudiants extends MY_Controller
     
     $etudiants = $this->Etudiant->get_limit_data($this->per_page, $start, $q);
     
-    $this->load->view('template/layout', [
+    $this->load->view($this->layout, [
       'q' => $q,
       'start' => $start,
       'records' => $etudiants,
@@ -39,40 +39,55 @@ class Etudiants extends MY_Controller
   {
     $row = $this->Etudiant->get_by_id($id);
     
-    if ( $row ) {
-      $this->load->view('template/layout', [
-        'record' => $row, 
-        'content_view' => 'etudiants/etudiants_read',
-      ]);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('etudiants'));
+    if (! $row ) {
+      $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+      return redirect(site_url('etudiants'));
     }
+    
+    $this->load->view($this->layout, [
+      'content_view' => 'etudiants/etudiants_read',
+      'action' => site_url('etudiants/update_action'),
+      
+      'id' => set_value('id', $row->id),
+      'code' => set_value('code', $row->code),
+      'nom' => set_value('nom', $row->nom),
+      'prenom' => set_value('prenom', $row->prenom),
+      'email' => set_value('email', $row->email),
+      'adresse' => set_value('adresse', $row->adresse),
+      'zipcode' => set_value('zipcode', $row->zipcode),
+      'ville' => set_value('ville', $row->ville),
+      'tel' => set_value('tel', $row->tel),
+      'cin' => set_value('cin', $row->cin),
+      'date_naiss' => set_value('date_naiss', $row->date_naiss),
+      'lieu_naiss' => set_value('lieu_naiss', $row->lieu_naiss),
+      'sexe' => set_value('sexe', $row->sexe),  
+    ]);
   }
 
-  public function create() 
-  {
-    $data = array(
-      'button' => 'Créer',
-      'action' => site_url('etudiants/create_action'),
-      'id' => set_value('id'),
-      'code' => set_value('code'),
-      'nom' => set_value('nom'),
-      'email' => set_value('email'),
-      'prenom' => set_value('prenom'),
-      'adresse' => set_value('adresse'),
-      'zipcode' => set_value('zipcode'),
-      'ville' => set_value('ville'),
-      'tel' => set_value('tel'),
-      'cin' => set_value('cin'),
-      'date_naiss' => set_value('date_naiss'),
-      'lieu_naiss' => set_value('lieu_naiss'),
-      'sexe' => set_value('sexe'),
-      'created' => set_value('created'),
-      'content_view' => 'etudiants/etudiants_form'
-      );
-    $this->load->view('template/layout', $data);
-  }
+  // public function create() 
+  // {
+  //   $data = array(
+  //     'button' => 'Créer',
+  //     'action' => site_url('etudiants/create_action'),
+  //     'id' => set_value('id'),
+  //     'code' => set_value('code'),
+  //     'nom' => set_value('nom'),
+  //     'email' => set_value('email'),
+  //     'prenom' => set_value('prenom'),
+  //     'adresse' => set_value('adresse'),
+  //     'zipcode' => set_value('zipcode'),
+  //     'ville' => set_value('ville'),
+  //     'tel' => set_value('tel'),
+  //     'cin' => set_value('cin'),
+  //     'date_naiss' => set_value('date_naiss'),
+  //     'lieu_naiss' => set_value('lieu_naiss'),
+  //     'sexe' => set_value('sexe'),
+  //     'created' => set_value('created'),
+  //     'content_view' => 'etudiants/etudiants_form'
+  //   );
+  //   
+  //   $this->load->view($this->layout, $data);
+  // }
 
   public function create_action() 
   {
@@ -81,101 +96,61 @@ class Etudiants extends MY_Controller
     // apply is_unique validation rule only on student creation
     $this->form_validation->set_rules('code', 'code étudiant', 'trim|required|is_unique[etudiants.code]');
 
-    if ($this->form_validation->run() == FALSE) {
-      $this->create();
-    } else {
-      $data = array(
-        'code' => $this->input->post('code',TRUE),
-        'nom' => $this->input->post('nom',TRUE),
-        'prenom' => $this->input->post('prenom',TRUE),
-        'adresse' => $this->input->post('adresse',TRUE),
-        'zipcode' => $this->input->post('zipcode',TRUE),
-        'ville' => $this->input->post('ville',TRUE),
-        'tel' => $this->input->post('tel',TRUE),
-        'cin' => $this->input->post('cin',TRUE),
-        'date_naiss' => $this->input->post('date_naiss',TRUE),
-        'lieu_naiss' => $this->input->post('lieu_naiss',TRUE),
-        'sexe' => $this->input->post('sexe',TRUE),
-        'email' => $this->input->post('email',TRUE),
-      );
+    if ($this->form_validation->run() == FALSE) return $this->index();
+    
+    $data = $this->input->post(['code', 'nom', 'prenom'], TRUE);
 
-      $this->Etudiant->insert($data);
-      $this->session->set_flashdata('message', 'Création réussie');
-      redirect(site_url('etudiants'));
-    }
+    if ( $this->Etudiant->insert($data) )
+      $this->session->set_flashdata('success', 'Création réussie');
+    
+    redirect(site_url("etudiants"));
   }
 
-  public function update($id) 
-  {
-    $row = $this->Etudiant->get_by_id($id);
+  // public function update($id) 
+  // {
+  //   $row = $this->Etudiant->get_by_id($id);
 
-    if ($row) {
-      $data = array(
-        'button' => 'Modifier',
-        'action' => site_url('etudiants/update_action'),
-        'id' => set_value('id', $row->id),
-        'code' => set_value('code', $row->code),
-        'nom' => set_value('nom', $row->nom),
-        'prenom' => set_value('prenom', $row->prenom),
-        'email' => set_value('email', $row->email),
-        'adresse' => set_value('adresse', $row->adresse),
-        'zipcode' => set_value('zipcode', $row->zipcode),
-        'ville' => set_value('ville', $row->ville),
-        'tel' => set_value('tel', $row->tel),
-        'cin' => set_value('cin', $row->cin),
-        'date_naiss' => set_value('date_naiss', $row->date_naiss),
-        'lieu_naiss' => set_value('lieu_naiss', $row->lieu_naiss),
-        'sexe' => set_value('sexe', $row->sexe),  
-        'content_view' => 'etudiants/etudiants_form'
-        );
+  //   if ($row) {
+  //     $data = array(
+  //       'button' => 'Modifier',
+          
+  //       'content_view' => 'etudiants/etudiants_form'
+  //       );
       
-      $this->load->view('template/layout', $data);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('etudiants'));
-    }
-  }
+  //     $this->load->view($this->layout, $data);
+  //   } else {
+  //     $this->session->set_flashdata('message', 'Aucun résultat trouvé');
+  //     redirect(site_url('etudiants'));
+  //   }
+  // }
 
   public function update_action() 
   {
     $this->_rules();
+    
+    $id = $this->input->post('id', TRUE);
 
-    if ($this->form_validation->run() == FALSE) {
-      $this->update($this->input->post('id', TRUE));
-    } else {
-      $data = array(
-        'code' => $this->input->post('code', TRUE),
-        'nom' => $this->input->post('nom', TRUE),
-        'prenom' => $this->input->post('prenom', TRUE),
-        'adresse' => $this->input->post('adresse', TRUE),
-        'zipcode' => $this->input->post('zipcode', TRUE),
-        'ville' => $this->input->post('ville', TRUE),
-        'tel' => $this->input->post('tel', TRUE),
-        'cin' => $this->input->post('cin', TRUE),
-        'date_naiss' => $this->input->post('date_naiss', TRUE),
-        'lieu_naiss' => $this->input->post('lieu_naiss', TRUE),
-        'sexe' => $this->input->post('sexe', TRUE),
-        'email' => $this->input->post('email', TRUE),
-      );
+    if ($this->form_validation->run() == FALSE) return $this->read($id);
+    
+    $data = $this->input->post([
+      'code', 'nom', 'prenom', 'adresse', 'zipcode', 'ville',
+      'tel', 'cin', 'sexe', 'email', 'date_naiss', 'lieu_naiss',
+    ], TRUE);
 
-      $this->Etudiant->update($this->input->post('id', TRUE), $data);
-      $this->session->set_flashdata('message', 'Modifications appliquées');
-      redirect(site_url('etudiants'));
-    }
+    if ( $this->Etudiant->update($id, $data) )
+      $this->session->set_flashdata('success', 'Modifications appliquées');
+    
+    redirect(site_url("etudiants/read/{$id}"));
   }
 
   public function delete($id) 
   {
     $row = $this->Etudiant->get_by_id($id);
 
-    if ($row) {
-      $this->Etudiant->delete($id);
-      $this->session->set_flashdata('message', 'Suppression réussie');
-      redirect(site_url('etudiants'));
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('etudiants'));
-    }
+    if (! $row ) $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+    else if ( $this->Etudiant->delete($id) ) $this->session->set_flashdata('success', 'Suppression réussie');
+    
+    redirect(site_url('etudiants'));
   }
 
   public function _rules() 
