@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed') ?>
 
-<form action="<?php echo site_url(uri_string()); ?>" class="-form-inline" method="GET">
+<form action="<?php echo site_url(uri_string()); ?>" class="form-inline" method="GET">
   <div class="form-group">
     <div class="input-group">
       <input type="text" class="form-control" name="q" value="<?php echo $q; ?>" placeholder="Rechercher">

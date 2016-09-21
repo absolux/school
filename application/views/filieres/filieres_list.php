@@ -41,8 +41,8 @@
         <table class="table table-condensed table-striped table-hover" style="margin-bottom: 10px">
           <thead>
             <tr>
-              <th>Nom de filière</th>
-              <th>Description</th>
+              <th>Libellé</th>
+              <th class="hidden-xs">Description</th>
               <th></th>
             </tr>
           </thead>
@@ -53,9 +53,9 @@
             <?php foreach ($records as $item) : ?>
             <tr>
               <td><?php echo anchor("filieres/read/{$item->id}", $item->label) ?></td>
-              <td><?php echo substr($item->description, 0, 65) . '...' ?></td>
+              <td class="hidden-xs"><?php echo substr($item->description, 0, 65) . '...' ?></td>
               <td class="text-right" width="100px">
-                <?php echo anchor('filieres/delete/'.$item->id, '<i class="glyphicon glyphicon-trash"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
+                <?php echo anchor('filieres/delete/'.$item->id, '<i class="glyphicon glyphicon-remove"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
               </td>
             </tr>
             <?php endforeach; ?>
