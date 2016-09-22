@@ -33,6 +33,9 @@ class Professeurs extends MY_Controller
       'total_rows' => $config['total_rows'],
       'content_view' => 'professeurs/professeurs_list',
       'pagination' => $this->pagination->create_links(),
+      
+      'nom' => set_value('nom'),
+      'prenom' => set_value('prenom'),
     ]);
   }
 

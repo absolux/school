@@ -22,15 +22,15 @@
         
         <?php echo form_open('etudiants/create_action', 'class="-form-horizontal"') ?>
           <div class="form-group <?php if ( form_error("code") ) echo 'has-error' ?>">
-            <?php echo form_input("code", NULL, 'class="form-control" required placeholder="Code"') ?>
+            <?php echo form_input("code", $code, 'class="form-control" required placeholder="Code"') ?>
             <?php echo form_error("code", '<span class="help-block">', '</span>') ?>
           </div>
           <div class="form-group <?php if ( form_error("prenom") ) echo 'has-error' ?>">
-            <?php echo form_input("prenom", NULL, 'class="form-control" required placeholder="Prénom"') ?>
+            <?php echo form_input("prenom", $prenom, 'class="form-control" required placeholder="Prénom"') ?>
             <?php echo form_error("prenom", '<span class="help-block">', '</span>') ?>
           </div>
           <div class="form-group <?php if ( form_error("nom") ) echo 'has-error' ?>">
-            <?php echo form_input("nom", NULL, 'class="form-control" required placeholder="Nom"') ?>
+            <?php echo form_input("nom", $nom, 'class="form-control" required placeholder="Nom"') ?>
             <?php echo form_error("nom", '<span class="help-block">', '</span>') ?>
           </div>
           <button type="submit" class="btn btn-block btn-primary">Créer</button>

@@ -32,6 +32,10 @@ class Etudiants extends MY_Controller
       'total_rows' => $config['total_rows'],
       'content_view' => 'etudiants/etudiants_list',
       'pagination' => $this->pagination->create_links(),
+      
+      'code' => set_value('code'),
+      'nom' => set_value('nom'),
+      'prenom' => set_value('prenom'),
     ]);
   }
 

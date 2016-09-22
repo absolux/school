@@ -39,9 +39,12 @@ class Groupes extends MY_Controller
       'content_view' => 'groupes/groupes_list',
       'pagination' => $this->pagination->create_links(),
       
-      'active_year' => $active_year ? $active_year->id : null,
       'filieres' => $this->Filiere->get_list(),
       'annees' => $this->Annee->get_list(),
+      
+      'label' => set_value('label'),
+      'id_annee' => set_value('id_annee', $active_year ? $active_year->id : NULL),
+      'id_filiere' => set_value('id_filiere'),
     ]);
   }
   
