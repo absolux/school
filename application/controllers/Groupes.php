@@ -29,14 +29,19 @@ class Groupes extends MY_Controller
     $this->pagination->initialize($config);
     
     $groupes = $this->Groupe->get_limit_data($this->per_page, $start, $q);
+    $active_year = $this->Annee->get_active();
     
-    $this->load->view('template/layout', [
+    $this->load->view($this->layout, [
       'q' => $q,
       'start' => $start,
       'records' => $groupes,
       'total_rows' => $config['total_rows'],
       'content_view' => 'groupes/groupes_list',
       'pagination' => $this->pagination->create_links(),
+      
+      'active_year' => $active_year ? $active_year->id : null,
+      'filieres' => $this->Filiere->get_list(),
+      'annees' => $this->Annee->get_list(),
     ]);
   }
   
@@ -44,118 +49,110 @@ class Groupes extends MY_Controller
   {
     $row = $this->Groupe->get_by_id($id);
     
-    if ( $row ) {
-      $this->load->view('template/layout', [
-        'record' => $row,
-        'content_view' => 'groupes/groupes_read',
-        'etudiants' => $this->Groupe->get_etudiants($id),
-      ]);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('classes'));
+    if (! $row ) {
+      $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+      return redirect(site_url('classes'));
     }
+    
+    $this->load->view($this->layout, [
+      'content_view' => 'groupes/groupes_read',
+      'action' => site_url('classes/update_action'),
+      
+      'id' => set_value('id', $row->id),
+      'label' => set_value('label', $row->label),
+      'id_annee' => set_value('id_annee', $row->id_annee),
+      'id_filiere' => set_value('id_filiere', $row->id_filiere),
+      
+      'annees' => $this->Annee->get_list(),
+      'filieres' => $this->Filiere->get_list(),
+      'etudiants' => $this->Groupe->get_etudiants($id),
+    ]);
   }
   
-  public function create() 
-  {
-    $active_year = $this->Annee->get_active();
+  // public function create() 
+  // {
+  //   $active_year = $this->Annee->get_active();
     
-    $data = array(
-      'button' => 'Créer',
-      'action' => site_url('groupes/create_action'),
-      'id' => set_value('id'),
-      'label' => set_value('label'),
-      'id_annee' => set_value('id_annee', $active_year ? $active_year->id : NULL),
-      // 'id_niveau' => set_value('id_niveau'),
-      'id_filiere' => set_value('id_filiere'),
-      'content_view' => 'groupes/groupes_form',
-      'annees' => $this->Annee->get_active_list(),
-      // 'niveaux' => $this->Niveau->get_list(),
-      'filieres' => $this->Filiere->get_list(),
-      'list_etudiants' => $this->Etudiant->get_list(),
-      'etudiants' => set_value('etudiants[]', [], FALSE),
-    );
+  //   $data = array(
+  //     'button' => 'Créer',
+  //     'action' => site_url('groupes/create_action'),
+  //     'id' => set_value('id'),
+  //     'label' => set_value('label'),
+  //     'id_annee' => set_value('id_annee', $active_year ? $active_year->id : NULL),
+  //     // 'id_niveau' => set_value('id_niveau'),
+  //     'id_filiere' => set_value('id_filiere'),
+  //     'content_view' => 'groupes/groupes_form',
+  //     'annees' => $this->Annee->get_active_list(),
+  //     // 'niveaux' => $this->Niveau->get_list(),
+  //     'filieres' => $this->Filiere->get_list(),
+  //     'list_etudiants' => $this->Etudiant->get_list(),
+  //     'etudiants' => set_value('etudiants[]', [], FALSE),
+  //   );
     
-    $this->load->view('template/layout', $data);
-  }
+  //   $this->load->view($this->layout, $data);
+  // }
   
   public function create_action() 
   {
     $this->_rules();
     
-    if ( $this->form_validation->run() == FALSE ) $this->create();
-    else {
-      $this->Groupe->insert($this->input->post([
-        'label', 'id_annee'/*, 'id_niveau'*/, 'id_filiere', 'etudiants'
-      ], TRUE));
-      
-      $this->session->set_flashdata('message', 'Création réussie');
-      redirect(site_url('classes'));
-    }
-  }
-
-  public function update($id) 
-  {
-    $row = $this->Groupe->get_by_id($id);
+    if ( $this->form_validation->run() == FALSE ) return $this->index();
     
-    $etudiant_ids = array_map(function ($item) {
-      return $item->id;
-    }, $this->Groupe->get_etudiants($id));
-
-    if ($row) {
-      $data = array(
-        'button' => 'Modifier',
-        'action' => site_url('classes/update_action'),
-        'id' => set_value('id', $row->id),
-        'label' => set_value('label', $row->label),
-        // 'id_niveau' => set_value('id_niveau', $row->id_niveau),
-        'id_annee' => set_value('id_annee', $row->id_annee),
-        'id_filiere' => set_value('id_filiere', $row->id_filiere),
-        'content_view' => 'groupes/groupes_form',
-        'annees' => $this->Annee->get_active_list(),
-        // 'niveaux' => $this->Niveau->get_list(),
-        'filieres' => $this->Filiere->get_list(),
-        'list_etudiants' => $this->Etudiant->get_list(),
-        'etudiants' => set_value('etudiants[]', $etudiant_ids, FALSE),
-      );
-      
-      $this->load->view('template/layout', $data);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('classes'));
-    }
+    $data = $this->input->post(['label', 'id_annee', 'id_filiere'], TRUE);
+    
+    if ( $this->Groupe->insert($data) )
+      $this->session->set_flashdata('success', 'Création réussie');
+    
+    redirect(site_url('classes'));
   }
+
+  // public function update($id) 
+  // {
+  //   $row = $this->Groupe->get_by_id($id);
+    
+  //   $etudiant_ids = array_map(function ($item) {
+  //     return $item->id;
+  //   }, $this->Groupe->get_etudiants($id));
+
+  //   if ($row) {
+  //     $data = array(
+  //       'button' => 'Modifier',
+        
+  //       'content_view' => 'groupes/groupes_form',
+  //       'list_etudiants' => $this->Etudiant->get_list(),
+  //       'etudiants' => set_value('etudiants[]', $etudiant_ids, FALSE),
+  //     );
+      
+  //     $this->load->view($this->layout, $data);
+  //   } else {
+  //     $this->session->set_flashdata('message', 'Aucun résultat trouvé');
+  //     redirect(site_url('classes'));
+  //   }
+  // }
 
   public function update_action() 
   {
-    $id = $this->input->post('id', TRUE);
-    
     $this->_rules();
     
-    if ($this->form_validation->run() == FALSE) $this->update($id);
-    else {
-      $data = $this->input->post([
-        'label', 'id_annee'/*, 'id_niveau'*/, 'id_filiere', 'etudiants'
-      ], TRUE);
-      
-      $this->Groupe->update($id, $data);
-      
-      $this->session->set_flashdata('message', 'Modifications appliquées');
-      redirect(site_url('classes'));
-    }
+    $id = $this->input->post('id', TRUE);
+    
+    if ($this->form_validation->run() == FALSE) return $this->read($id);
+    
+    $data = $this->input->post(['label', 'id_annee', 'id_filiere'], TRUE);
+    
+    if ( $this->Groupe->update($id, $data) )
+      $this->session->set_flashdata('success', 'Modifications appliquées');
+    
+    redirect(site_url("classes/read/{$id}"));
   }
 
   public function delete($id) 
   {
     $row = $this->Groupe->get_by_id($id);
 
-    if ($row) {
-      $this->Groupe->delete($id);
-      
-      $this->session->set_flashdata('message', 'Suppression réussie');
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-    }
+    if (! $row ) $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+    else if ( $this->Groupe->delete($id) ) 
+      $this->session->set_flashdata('success', 'Suppression réussie');
     
     redirect(site_url('classes'));
   }
@@ -166,7 +163,7 @@ class Groupes extends MY_Controller
     
     $this->form_validation->set_rules('id', 'id', 'trim');
     $this->form_validation->set_rules('label', 'nom', 'trim|required');
-    $this->form_validation->set_rules('etudiants[]', 'étudiants', 'required');
+    // $this->form_validation->set_rules('etudiants[]', 'étudiants', 'required');
     // $this->form_validation->set_rules('id_niveau', 'niveau', 'trim|required');
     $this->form_validation->set_rules('id_filiere', 'filière', 'trim|required');
     $this->form_validation->set_rules('id_annee', 'Année scolaire', 'trim|required');

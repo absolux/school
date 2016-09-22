@@ -72,7 +72,7 @@ class Groupe extends CI_Model
     unset($data['etudiants']);
     
     if ( ($result = $this->db->insert($this->table, $data)) ) {
-      $this->sync_etudiants($this->db->insert_id(), $etudiants);
+      // $this->sync_etudiants($this->db->insert_id(), $etudiants);
     }
     
     return $result;
@@ -85,7 +85,7 @@ class Groupe extends CI_Model
     unset($data['etudiants']);
     
     if ( ($result = $this->db->where($this->pk, $id)->update($this->table, $data)) ) {
-      $this->sync_etudiants($id, $etudiants);
+      // $this->sync_etudiants($id, $etudiants);
     }
     
     return $result;
