@@ -5,6 +5,15 @@
 
 <div class="row">
   <div class="col-md-3">
+    
+    <div class="panel panel-default">
+      <div class="panel-body">
+        
+        <?php $this->load->view('common/search_form') ?>
+        
+      </div>
+    </div>
+    
     <div class="panel panel-default">
       <div class="panel-body">
         <p class="-lead">

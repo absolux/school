@@ -14,18 +14,21 @@ class Annees extends MY_Controller
 
   public function index()
   {
+    $q = urldecode($this->input->get('q', TRUE));
     $start = intval($this->input->get('start'));
     
     $config['per_page'] = $this->per_page;
     $config['base_url'] = base_url('annees-scolaires');
-    $config['total_rows'] = $this->Annee->total_rows();
+    $config['total_rows'] = $this->Annee->total_rows($q);
     
     $this->load->library('pagination');
     $this->pagination->initialize($config);
     
-    $annees = $this->Annee->get_limit_data($this->per_page, $start);
+    $annees = $this->Annee->get_limit_data($this->per_page, $start, $q);
     
     $this->load->view($this->layout, [
+      'q' => $q,
+      'start' => $start,
       'records' => $annees,
       'total_rows' => $config['total_rows'],
       'content_view' => 'annees/annees_list',
