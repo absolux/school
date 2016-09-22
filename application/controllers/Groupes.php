@@ -162,7 +162,7 @@ class Groupes extends MY_Controller
     $this->load->library('form_validation');
     
     $this->form_validation->set_rules('id', 'id', 'trim');
-    $this->form_validation->set_rules('label', 'nom', 'trim|required');
+    $this->form_validation->set_rules('label', 'libellé', 'trim|required');
     // $this->form_validation->set_rules('etudiants[]', 'étudiants', 'required');
     // $this->form_validation->set_rules('id_niveau', 'niveau', 'trim|required');
     $this->form_validation->set_rules('id_filiere', 'filière', 'trim|required');
