@@ -19,6 +19,10 @@
       margin-bottom: 34px;
     }
     
+    #page-content {
+      padding-top: 75px;
+    }
+    
     .navbar-brand {
       min-width: 150px;
     }
@@ -44,7 +48,7 @@
   
   <?php $this->load->view('template/header'); ?>
 	
-  <div class="container">
+  <div class="container" id="page-content">
 		<?php $this->load->view($content_view); ?>
 	</div>
 
