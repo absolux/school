@@ -20,6 +20,11 @@
       margin-bottom: 34px;
     }
     
+    a:hover,
+    a:focus {
+      text-decoration: none;
+    }
+    
     #page-content {
       padding-top: 75px;
     }
@@ -34,6 +39,10 @@
       text-decoration: none;
       color: #141414;
       background-color: #eeeeee;
+    }
+    
+    .close {
+      font-size: 28px;
     }
   </style>
   

@@ -61,7 +61,7 @@
               <td class="hidden-xs hidden-sm"><?php echo $item->email ?></td>
               <td class="hidden-xs"><?php echo $item->tel ?></td>
               <td class="text-right" width="100px">
-                <?php echo anchor('professeurs/delete/'.$item->id, '<i class="glyphicon glyphicon-remove"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
+                <?php echo anchor('professeurs/delete/'.$item->id, '&times;', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="close"'); ?>
               </td>
             </tr>
             <?php endforeach; ?>

@@ -65,7 +65,7 @@
               <td class="hidden-xs"><?php echo $item->filiere ?></td>
               <td class="hidden-sm hidden-xs"><?php echo $item->annee ?></td>
               <td class="text-right" width="100px">
-                <?php echo anchor("classes/delete/{$item->id}", '<i class="glyphicon glyphicon-remove"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
+                <?php echo anchor("classes/delete/{$item->id}", '&times;', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="close"'); ?>
               </td>
             </tr>
             <?php endforeach; ?>

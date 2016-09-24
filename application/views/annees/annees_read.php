@@ -41,7 +41,6 @@
                 <tr>
                   <th>Période</th>
                   <th>Active</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -52,12 +51,11 @@
                 <tr>
                   <td><?php echo $item->label ?></td>
                   <td style="padding-left: 15px">
-                    <i class="text-<?php echo ($item->active) ? 'success' : 'muted' ?> glyphicon glyphicon-ok"></i>
-                  </td>
-                  <td class="text-right" width="100px">
-                    <?php if (! $item->active ) echo anchor("semestres/activate/{$item->id}",'<i class="glyphicon glyphicon-ok"></i>', 'class="btn btn-xs btn-success" title=Activer'); ?>
-                    <?php //echo anchor('semestres/update/'.$item->id, '<i class="glyphicon glyphicon-pencil"></i>', 'title="Editer" class="btn btn-xs btn-primary"'); ?> 
-                    <?php //echo anchor('semestres/delete/'.$item->id, '<i class="glyphicon glyphicon-remove"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
+                    <?php if ( $item->active ): ?>
+                    <i class="text-success glyphicon glyphicon-ok"></i>
+                    <?php else: ?>
+                    <a href="<?php echo base_url("semestres/activate/{$item->id}") ?>"><i class="text-muted glyphicon glyphicon-ok"></i></a>
+                    <?php endif; ?>
                   </td>
                 </tr>
                 <?php endforeach; ?>

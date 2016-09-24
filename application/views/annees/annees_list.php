@@ -57,13 +57,16 @@
             <tr>
               <td><?php echo anchor("annees-scolaires/read/{$item->id}", $item->label) ?></td>
               <td style="padding-left: 15px">
-                <i class="text-<?php echo ($item->active) ? 'success' : 'muted' ?> glyphicon glyphicon-ok"></i>
+                <?php if ( $item->active ): ?>
+                <i class="text-success glyphicon glyphicon-ok"></i>
+                <?php else: ?>
+                <a href="<?php echo base_url("annees-scolaires/activate/{$item->id}") ?>"><i class="text-muted glyphicon glyphicon-ok"></i></a>
+                <?php endif; ?>
               </td>
               <td class="hidden-sm hidden-xs"><?php echo $item->date_debut ?></td>
               <td class="hidden-sm hidden-xs"><?php echo $item->date_fin ?></td>
               <td class="text-right" width="120px">
-                <?php if (! $item->active ) echo anchor('annees-scolaires/activate/'.$item->id,'<i class="glyphicon glyphicon-ok"></i>', 'class="btn btn-xs btn-success" title=Activer'); ?>
-                <?php echo anchor('annees-scolaires/delete/'.$item->id, '<i class="glyphicon glyphicon-remove"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
+                <?php echo anchor('annees-scolaires/delete/'.$item->id, '&times;', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="close"'); ?>
               </td>
             </tr>
             <?php endforeach; ?>

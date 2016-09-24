@@ -55,7 +55,7 @@
               <td><?php echo anchor("matieres/read/{$item->id}", $item->label) ?></td>
               <td class="hidden-xs"><?php echo substr($item->description, 0, 75) . '...' ?></td>
               <td class="text-right" width="100px">
-                <?php echo anchor('matieres/delete/'.$item->id, '<i class="glyphicon glyphicon-remove"></i>', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="btn btn-xs btn-danger"'); ?>
+                <?php echo anchor('matieres/delete/'.$item->id, '&times;', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="close"'); ?>
               </td>
             </tr>
             <?php endforeach; ?>
