@@ -149,4 +149,16 @@ class Groupe extends CI_Model
     return $this->db->insert_batch('etudiants_groups', $data);
   }
   
+  function attach_etudiant($id_group, $id_etudiant) {
+    $this->db->set(['id_group' => $id_group, 'id_etudiant' => $id_etudiant ]);
+    
+    return $this->db->insert('etudiants_groups');
+  }
+  
+  function detach_etudiant($id_group, $id_etudiant) {
+    $this->db->where(['id_group' => $id_group, 'id_etudiant' => $id_etudiant ]);
+    
+    return $this->db->delete('etudiants_groups');
+  }
+  
 }

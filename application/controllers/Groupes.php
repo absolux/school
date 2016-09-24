@@ -159,8 +159,24 @@ class Groupes extends MY_Controller
     
     redirect(site_url('classes'));
   }
+  
+  public function attach($id) {
+    $row = $this->Groupe->get_by_id($id);
+    
+    if (! $row ) trigger_error("Not Found", E_USER_ERROR);
+    
+    $this->Groupe->attach_etudiant($id, $this->input->post('etudiant', TRUE));
+  }
+  
+  public function detach($id) {
+    $row = $this->Groupe->get_by_id($id);
+    
+    if (! $row ) trigger_error("Not Found", E_USER_ERROR);
+    
+    $this->Groupe->detach_etudiant($id, $this->input->post('etudiant', TRUE));
+  }
 
-  public function _rules() 
+  protected function _rules() 
   {
     $this->load->library('form_validation');
     

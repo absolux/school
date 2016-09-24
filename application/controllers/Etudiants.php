@@ -8,7 +8,13 @@ class Etudiants extends MY_Controller
   function __construct()
   {
     parent::__construct();
+    
     $this->load->model('Etudiant');
+  }
+  
+  public function json_list() {
+    echo json_encode($this->Etudiant->to_json());
+    exit;
   }
 
   public function index()
