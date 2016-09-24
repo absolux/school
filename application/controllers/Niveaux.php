@@ -8,6 +8,7 @@ class Niveaux extends MY_Controller
   function __construct()
   {
     parent::__construct();
+    
     $this->load->model('Niveau');
   }
 
@@ -25,7 +26,7 @@ class Niveaux extends MY_Controller
     
     $niveaux = $this->Niveau->get_limit_data($this->per_page, $start, $q);
     
-    $this->load->view('template/layout', [
+    $this->load->view($this->layout, [
       'q' => $q,
       'start' => $start,
       'records' => $niveaux,
@@ -39,103 +40,97 @@ class Niveaux extends MY_Controller
   {
     $row = $this->Niveau->get_by_id($id);
     
-    if ( $row ) {
-      $this->load->view('template/layout', [
-        'record' => $row,
-        'content_view' => 'niveaux/niveaux_read',
-      ]);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('niveaux'));
+    if (! $row ) {
+      $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+      return redirect(site_url('niveaux'));
     }
+    
+    $this->load->view($this->layout, [
+      'content_view' => 'niveaux/niveaux_read',
+      'action' => site_url('niveaux/update_action'),
+      
+      'id' => set_value('id', $row->id),
+      'label' => set_value('label', $row->label),
+    ]);
   }
 
-  public function create() 
-  {
-    $data = array(
-      'button' => 'Créer',
-      'content_view' => 'niveaux/niveaux_form',
-      'action' => site_url('niveaux/create_action'),
-      'id' => set_value('id'),
-      'label' => set_value('label'),
-    );
+  // public function create() 
+  // {
+  //   $data = array(
+  //     'button' => 'Créer',
+  //     'content_view' => 'niveaux/niveaux_form',
+  //     'action' => site_url('niveaux/create_action'),
+  //     'id' => set_value('id'),
+  //     'label' => set_value('label'),
+  //   );
     
-    $this->load->view('template/layout', $data);
-  }
+  //   $this->load->view($this->layout, $data);
+  // }
 
   public function create_action() 
   {
     $this->_rules();
 
-    if ($this->form_validation->run() == FALSE) {
-      $this->create();
-    } else {
-      $data = array(
-        'label' => $this->input->post('label',TRUE),
-      );
+    if ( $this->form_validation->run() == FALSE ) return $this->index();
+    
+    $data = $this->input->post(['label'], TRUE);
 
-      $this->Niveau->insert($data);
-      $this->session->set_flashdata('message', 'Création réussie');
-      redirect(site_url('niveaux'));
-    }
+    if ( $this->Niveau->insert($data) )
+      $this->session->set_flashdata('success', 'Création réussie');
+    
+    redirect(site_url('niveaux'));
   }
 
-  public function update($id) 
-  {
-    $row = $this->Niveau->get_by_id($id);
+  // public function update($id) 
+  // {
+  //   $row = $this->Niveau->get_by_id($id);
 
-    if ($row) {
-      $data = array(
-        'button' => 'Modifier',
-        'content_view' => 'niveaux/niveaux_form',
-        'action' => site_url('niveaux/update_action'),
-        'id' => set_value('id', $row->id),
-        'label' => set_value('label', $row->label),
-        );
+  //   if ($row) {
+  //     $data = array(
+  //       'button' => 'Modifier',
+  //       'content_view' => 'niveaux/niveaux_form',
+  //       'id' => set_value('id', $row->id),
+  //       'label' => set_value('label', $row->label),
+  //       );
       
-      $this->load->view('template/layout', $data);
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('niveaux'));
-    }
-  }
+  //     $this->load->view($this->layout, $data);
+  //   } else {
+  //     $this->session->set_flashdata('message', 'Aucun résultat trouvé');
+  //     redirect(site_url('niveaux'));
+  //   }
+  // }
 
   public function update_action() 
   {
     $this->_rules();
+    
+    $id = $this->input->post('id', TRUE);
 
-    if ($this->form_validation->run() == FALSE) {
-      $this->update($this->input->post('id', TRUE));
-    } else {
-      $data = array(
-        'label' => $this->input->post('label', TRUE),
-      );
+    if ($this->form_validation->run() == FALSE) return $this->read($id);
+    
+    $data = $this->input->post(['label'], TRUE);
 
-      $this->Niveau->update($this->input->post('id', TRUE), $data);
-      $this->session->set_flashdata('message', 'Modifications appliquées');
-      redirect(site_url('niveaux'));
-    }
+    if ( $this->Niveau->update($id, $data) )
+      $this->session->set_flashdata('success', 'Modifications appliquées');
+    
+    redirect(site_url('niveaux'));
   }
 
   public function delete($id) 
   {
     $row = $this->Niveau->get_by_id($id);
 
-    if ($row) {
-      $this->Niveau->delete($id);
-      $this->session->set_flashdata('message', 'Suppression réussie');
-      redirect(site_url('niveaux'));
-    } else {
-      $this->session->set_flashdata('message', 'Aucun résultat trouvé');
-      redirect(site_url('niveaux'));
-    }
+    if (! $row ) $this->session->set_flashdata('warning', 'Aucun résultat trouvé');
+    else if ( $this->Niveau->delete($id) ) $this->session->set_flashdata('success', 'Suppression réussie');
+    
+    redirect(site_url('niveaux'));
   }
 
   public function _rules() 
   {
     $this->load->library('form_validation');
     
-    $this->form_validation->set_rules('label', 'nom', 'trim|required');
+    $this->form_validation->set_rules('label', 'libellé', 'trim|required');
     $this->form_validation->set_rules('id', 'id', 'trim');
   }
 
