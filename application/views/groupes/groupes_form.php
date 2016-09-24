@@ -2,9 +2,9 @@
 <?php echo form_open($action, 'class="form-horizontal"', ['id' => $id]) ?>
   
   <div class="form-group">
-    <label for="label" class="col-sm-3 control-label">Libellé</label>
-    <div class="col-sm-8 <?php echo form_error("label") ? 'has-error' : '' ?>">
-      <?php echo form_input("label", $label, 'class="form-control" id="label" required') ?>
+    <!--<label for="label" class="col-sm-3 control-label">Libellé</label>-->
+    <div class="col-sm-offset-1 col-sm-10 <?php echo form_error("label") ? 'has-error' : '' ?>">
+      <?php echo form_input("label", $label, 'class="form-control" id="label" required placeholder="Libellé"') ?>
       <?php echo form_error("label", '<span class="help-block">', '</span>') ?>
     </div>
   </div>

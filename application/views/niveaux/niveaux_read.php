@@ -1,6 +1,6 @@
 
 <div class="-page-header">
-  <h3>Niveaux <small>Détail</small></h3>
+  <h3>Niveaux <small><i class="glyphicon glyphicon-chevron-right"></i> Détail</small></h3>
 </div>
 
 <div class="row">

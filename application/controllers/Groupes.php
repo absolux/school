@@ -106,7 +106,7 @@ class Groupes extends MY_Controller
     if ( $this->Groupe->insert($data) )
       $this->session->set_flashdata('success', 'Création réussie');
     
-    redirect(site_url('classes'));
+    redirect(site_url("classes/read/{$this->db->insert_id()}"));
   }
 
   // public function update($id) 

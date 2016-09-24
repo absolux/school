@@ -25,13 +25,13 @@
             <?php echo form_input("label", $label, 'class="form-control" required placeholder="Libellé"') ?>
             <?php echo form_error("label", '<span class="help-block">', '</span>') ?>
           </div>
-          <div class="form-group <?php echo form_error("id_annee") ? 'has-error' : '' ?>">
-            <?php echo form_dropdown("id_annee", ['' => "Sélectionnez l'année scolaire"] + $annees, $id_annee, 'id=id_annee class="form-control" required') ?>
-            <?php echo form_error("id_annee", '<span class="help-block">', '</span>') ?>
-          </div>
           <div class="form-group <?php echo form_error("id_filiere") ? 'has-error' : '' ?>">
             <?php echo form_dropdown("id_filiere", ['' => "Sélectionnez la filière"] + $filieres, $id_filiere, 'id=id_filiere class="form-control" required') ?>
             <?php echo form_error("id_filiere", '<span class="help-block">', '</span>') ?>
+          </div>
+          <div class="form-group <?php echo form_error("id_annee") ? 'has-error' : '' ?>">
+            <?php echo form_dropdown("id_annee", ['' => "Sélectionnez l'année scolaire"] + $annees, $id_annee, 'id=id_annee class="form-control" required') ?>
+            <?php echo form_error("id_annee", '<span class="help-block">', '</span>') ?>
           </div>
           <button type="submit" class="btn btn-block btn-primary">Créer</button>
         <?php echo form_close() ?>

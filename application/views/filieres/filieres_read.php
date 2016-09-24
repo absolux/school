@@ -1,6 +1,6 @@
 
 <div class="-page-header">
-  <h3>Filières <small>Détail</small></h3>
+  <h3>Filières <small><i class="glyphicon glyphicon-chevron-right"></i> Détail</small></h3>
 </div>
 
 <div class="row">

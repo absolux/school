@@ -39,7 +39,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         
-        <table class="table -table-bordered table-condensed table-striped table-hover">
+        <table class="table table-condensed table-striped table-hover" style="margin-bottom: 10px;">
           <thead>
             <tr>
               <th>Libellé</th>

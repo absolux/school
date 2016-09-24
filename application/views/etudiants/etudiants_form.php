@@ -1,5 +1,4 @@
 
-<div>
 <?php echo form_open($action, 'class="form-horizontal"', ['id' => $id]) ?>
 
   <div class="form-group">
