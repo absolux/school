@@ -23,6 +23,9 @@
         <li class="<?php if ( strpos(uri_string(), 'classes') === 0 ) echo 'active' ?>">
           <?php echo anchor("classes", "Classes") ?>
         </li>
+        <li class="<?php if ( strpos(uri_string(), 'absences') === 0 ) echo 'active' ?>">
+          <?php echo anchor("absences", "Absences") ?>
+        </li>
         <li class="<?php if ( strpos(uri_string(), 'annees-scolaires') === 0 ) echo 'active' ?>">
           <?php echo anchor("annees-scolaires", "Années scolaires") ?>
         </li>
