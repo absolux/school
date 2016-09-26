@@ -57,7 +57,7 @@
                 <td><?php echo date('Y-m-d', strtotime($item->date_debut)) ?></td>
                 <td><?php echo $item->semestre ?></td>
                 <td class="text-right" width="30">
-                  <?php echo anchor('matieres/delete/'.$item->id, '&times;', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="close"'); ?>
+                  <?php echo anchor('absences/delete/'.$item->id, '&times;', 'onclick="javasciprt: return confirm(\'Etes vous sûr ?\')" title="Supprimer" class="close"'); ?>
                 </td>
               </tr>
               <?php endforeach; ?>
