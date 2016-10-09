@@ -211,33 +211,6 @@ CREATE TABLE `etudiants` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `students`
---
-
-DROP TABLE IF EXISTS `students`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `students` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` varchar(50) DEFAULT NULL,
-  `nom` varchar(50) NOT NULL,
-  `prenom` varchar(50) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `adresse` varchar(50) DEFAULT NULL,
-  `zipcode` varchar(50) DEFAULT NULL,
-  `ville` varchar(50) DEFAULT NULL,
-  `tel` varchar(50) DEFAULT NULL,
-  `cin` varchar(50) DEFAULT NULL,
-  `date_naiss` date DEFAULT NULL,
-  `lieu_naiss` varchar(50) DEFAULT NULL,
-  `sexe` varchar(50) DEFAULT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `etudiants_groups`
 --
 
@@ -255,6 +228,8 @@ CREATE TABLE `etudiants_groups` (
   CONSTRAINT `FK_etudiants_groups_groups` FOREIGN KEY (`id_group`) REFERENCES `groupes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+ALTER TABLE `db_ecole`.`etudiants_groups` DROP INDEX `UK_id_etudiant_id_group`, ADD UNIQUE `UK_id_etudiant_id_group` (`id_etudiant`, `id_group`) USING BTREE;
 
 --
 -- Table structure for table `niveaux`
