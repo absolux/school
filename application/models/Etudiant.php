@@ -80,7 +80,7 @@ class Etudiant extends CI_Model
   }
   
   function to_json() {
-    $columns = ['id', "CONCAT(code, ' - ', prenom, ' ', nom) as name"];
+    $columns = ['id', "CONCAT(code, ' ', prenom, ' ', nom) as name"];
     
     return $this->db->select($columns)->get($this->table)->result();
   }

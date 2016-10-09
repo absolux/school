@@ -14,39 +14,48 @@ class Absences extends MY_Controller
     $this->load->model('Seance');
     $this->load->model('Groupe');
     $this->load->model('Semestre');
+    $this->load->model('Etudiant');
   }
 
   public function index()
   {
-    $q = urldecode($this->input->get('q', TRUE));
-    $d = urldecode($this->input->get('d', TRUE));
-    $m = urldecode($this->input->get('m', TRUE));
-    $s = urldecode($this->input->get('s', TRUE));
+    $e = urldecode($this->input->get('e', TRUE)); // id_etudiant
+    $d = urldecode($this->input->get('d', TRUE)); // date_debut
+    $m = urldecode($this->input->get('m', TRUE)); // id_matiere
+    $s = urldecode($this->input->get('s', TRUE)); // id_semestre
     $start = intval($this->input->get('start'));
+    
+    $active_semestre = $this->Semestre->get_active();
+    $active_semestre = $active_semestre ? $active_semestre->id : NULL;
+    
+    if ( empty($s) ) $s = $active_semestre;
+    else if ( $s === 'all' ) $s = '';
     
     $config['per_page'] = $this->per_page;
     $config['base_url'] = base_url('absences');
-    $config['total_rows'] = $this->Absence->total_rows($q, $d, $m, $s);
+    $config['total_rows'] = $this->Absence->total_rows($e, $d, $m, $s);
     
     $this->load->library('pagination');
     $this->pagination->initialize($config);
     
-    $absences = $this->Absence->get_limit_data($this->per_page, $start, $q, $d, $m, $s);
+    $absences = $this->Absence->get_limit_data($this->per_page, $start, $e, $d, $m, $s);
     
     $this->load->view('template/layout', [
-      'q' => $q,
+      'e' => $e,
       'd' => $d,
       'm' => $m,
       's' => $s,
       'start' => $start,
       'records' => $absences,
-      'total_rows' => $config['total_rows'],
       'content_view' => 'absences/list',
+      'total_rows' => $config['total_rows'],
+      'active_semestre' => $active_semestre,
       'pagination' => $this->pagination->create_links(),
       
       'groupes' => $this->Groupe->get_list(),
       'matieres' => $this->Matiere->get_list(),
       'semestres' => $this->Semestre->get_list(),
+      'etudiants' => $this->Etudiant->get_list(),
     ]);
   }
 

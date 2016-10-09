@@ -51,7 +51,12 @@
               <?php else: ?>
               <?php foreach ($records as $item) : ?>
               <tr>
+                <?php if ( empty($e) ): ?>
+                <td><?php echo anchor("absences?e={$item->id_etudiant}", "{$item->code} {$item->prenom} {$item->nom}") ?></td>
+                <?php else: ?>
                 <td><?php echo "{$item->code} {$item->prenom} {$item->nom}" ?></td>
+                <?php endif; ?>
+                
                 <td><?php echo anchor("absences/update/{$item->id_seance}", $item->seance_title) ?></td>
                 <td><?php echo $item->matiere ?></td>
                 <td><?php echo date('Y-m-d', strtotime($item->date_debut)) ?></td>

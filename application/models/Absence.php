@@ -6,7 +6,7 @@ class Absence extends CI_Model
   public $pk = 'id';
   public $table = 'absences';
   // public $view = "absences_details";
-  public $search_columns = [ 'nom', 'prenom', 'code' ];
+  // public $search_columns = [ 'nom', 'prenom', 'code' ];
 
 
   function __construct()
@@ -17,9 +17,9 @@ class Absence extends CI_Model
   }
 
   // get all
-  function get_all($limit = 15, $start = 0, $q = NULL, $d = NULL, $m = NULL, $s = NULL)
+  function get_all($limit = 15, $start = 0, $e = NULL, $d = NULL, $m = NULL, $s = NULL)
   {
-      return $this->get_limit_data($limit, $start, $q, $d, $m, $s);
+      return $this->get_limit_data($limit, $start, $e, $d, $m, $s);
   }
 
   // get data by id
@@ -38,21 +38,15 @@ class Absence extends CI_Model
     $this->db->join('matieres', 'matieres.id = seances.id_matiere');
     $this->db->join('etudiants', "etudiants.id = {$this->table}.id_etudiant");
     
-    $this->db->where("{$this->table}.statut", FALSE);
+    $this->db->where("{$this->table}.statut", 0);
     $this->db->where($this->table . '.' . $this->pk, $id);
     
     return $this->db->get($this->table)->row();
   }
   
   // get total rows
-  function total_rows($q = NULL, $d = NULL, $m = NULL, $s = NULL) {
-    if ( $q ) {
-      $this->db->group_start();
-      foreach ( $this->search_columns as $col ) {
-        $this->db->or_like($col, $q);
-      }
-      $this->db->group_end();
-    }
+  function total_rows($e = NULL, $d = NULL, $m = NULL, $s = NULL) {
+    if ( $e ) $this->db->where("{$this->table}.id_etudiant", $e);
     
     if ( $d ) $this->db->where('seances.date_debut', $d);
     
@@ -61,22 +55,15 @@ class Absence extends CI_Model
     if ( $s ) $this->db->where('seances.id_semestre', $s);
     
     $this->db->join('seances', "seances.id = {$this->table}.id_seance");
-    $this->db->join('etudiants', "etudiants.id = {$this->table}.id_etudiant");
     
-    $this->db->where("{$this->table}.statut", FALSE);
+    $this->db->where("{$this->table}.statut", 0);
      
     return $this->db->count_all_results($this->table);
   }
 
   // get data with limit and search
-  function get_limit_data($limit, $start = 0, $q = NULL, $d = NULL, $m = NULL, $s = NULL) {
-    if ( $q ) {
-      $this->db->group_start();
-      foreach ( $this->search_columns as $col ) {
-        $this->db->or_like($col, $q);
-      }
-      $this->db->group_end();
-    }
+  function get_limit_data($limit, $start = 0, $e = NULL, $d = NULL, $m = NULL, $s = NULL) {
+    if ( $e ) $this->db->where("{$this->table}.id_etudiant", $e);
     
     if ( $d ) $this->db->where('seances.date_debut', $d);
     
