@@ -210,6 +210,8 @@ CREATE TABLE `etudiants` (
 ) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+ALTER TABLE `etudiants` ADD `tel_parent` VARCHAR(50) NULL DEFAULT NULL AFTER `tel`;
+
 --
 -- Table structure for table `etudiants_groups`
 --

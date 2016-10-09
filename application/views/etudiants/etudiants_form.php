@@ -61,6 +61,14 @@
   </div>
 
   <div class="form-group">
+    <label for="tel_parent" class="col-sm-4 control-label">Téléphone du parent</label>
+    <div class="col-sm-3 has-warning <?php echo form_error("tel_parent") ? 'has-error' : '' ?>">
+      <?php echo form_input("tel_parent", $tel_parent, 'class="form-control" id="tel_parent"') ?>
+      <?php echo form_error("tel_parent", '<span class="help-block">', '</span>') ?>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="cin" class="col-sm-4 control-label">CIN</label>
     <div class="col-sm-3 <?php echo form_error("cin") ? 'has-error' : '' ?>">
       <?php echo form_input("cin", $cin, 'class="form-control" id="cin"') ?>

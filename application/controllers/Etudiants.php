@@ -67,6 +67,7 @@ class Etudiants extends MY_Controller
       'zipcode' => set_value('zipcode', $row->zipcode),
       'ville' => set_value('ville', $row->ville),
       'tel' => set_value('tel', $row->tel),
+      'tel_parent' => set_value('tel', $row->tel_parent),
       'cin' => set_value('cin', $row->cin),
       'date_naiss' => set_value('date_naiss', $row->date_naiss),
       'lieu_naiss' => set_value('lieu_naiss', $row->lieu_naiss),
@@ -143,7 +144,7 @@ class Etudiants extends MY_Controller
     if ($this->form_validation->run() == FALSE) return $this->read($id);
     
     $data = $this->input->post([
-      'code', 'nom', 'prenom', 'adresse', 'zipcode', 'ville',
+      'code', 'nom', 'prenom', 'adresse', 'zipcode', 'ville', 'tel_parent',
       'tel', 'cin', 'sexe', 'email', 'date_naiss', 'lieu_naiss',
     ], TRUE);
 
@@ -175,6 +176,7 @@ class Etudiants extends MY_Controller
     $this->form_validation->set_rules('zipcode', 'zipcode', 'trim');
     $this->form_validation->set_rules('ville', 'ville', 'trim');
     $this->form_validation->set_rules('tel', 'téléphone', 'trim');
+    $this->form_validation->set_rules('tel_parent', 'téléphone du parent', 'trim');
     $this->form_validation->set_rules('cin', 'CIN', 'trim');
     $this->form_validation->set_rules('date_naiss', 'date de naissance', 'trim');
     $this->form_validation->set_rules('lieu_naiss', 'lieu de naissance', 'trim');
