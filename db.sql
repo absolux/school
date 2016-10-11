@@ -36,10 +36,10 @@ CREATE TABLE `inscriptions` (
   KEY `FK_inscriptions_filieres` (`id_filiere`),
   KEY `FK_inscriptions_niveaux` (`id_niveau`),
   KEY `FK_inscriptions_annee_scolaires` (`id_annee`),
-  CONSTRAINT `FK_inscriptions_annee_scolaires` FOREIGN KEY (`id_annee`) REFERENCES `annee_scolaires` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_inscriptions_etudiants` FOREIGN KEY (`id_etudiant`) REFERENCES `etudiants` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_inscriptions_filieres` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_inscriptions_niveaux` FOREIGN KEY (`id_niveau`) REFERENCES `niveaux` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_inscriptions_annee_scolaires` FOREIGN KEY (`id_annee`) REFERENCES `annee_scolaires` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_inscriptions_etudiants` FOREIGN KEY (`id_etudiant`) REFERENCES `etudiants` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_inscriptions_filieres` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_inscriptions_niveaux` FOREIGN KEY (`id_niveau`) REFERENCES `niveaux` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -91,8 +91,8 @@ CREATE TABLE `absences` (
   PRIMARY KEY (`id`),
   KEY `FK_absences_seances` (`id_seance`),
   KEY `FK_absences_etudiants` (`id_etudiant`),
-  CONSTRAINT `FK_absences_etudiants` FOREIGN KEY (`id_etudiant`) REFERENCES `etudiants` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_absences_seances` FOREIGN KEY (`id_seance`) REFERENCES `seances` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_absences_etudiants` FOREIGN KEY (`id_etudiant`) REFERENCES `etudiants` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_absences_seances` FOREIGN KEY (`id_seance`) REFERENCES `seances` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -113,9 +113,9 @@ CREATE TABLE `groupes` (
   KEY `fk_groupes_1` (`id_niveau`),
   KEY `fk_groupes_2` (`id_annee`),
   KEY `fk_groupes_3` (`id_filiere`),
-  CONSTRAINT `fk_groupes_1` FOREIGN KEY (`id_niveau`) REFERENCES `niveaux` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_groupes_2` FOREIGN KEY (`id_annee`) REFERENCES `annee_scolaires` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_groupes_3` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_groupes_1` FOREIGN KEY (`id_niveau`) REFERENCES `niveaux` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_groupes_2` FOREIGN KEY (`id_annee`) REFERENCES `annee_scolaires` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_groupes_3` FOREIGN KEY (`id_filiere`) REFERENCES `filieres` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -157,10 +157,10 @@ CREATE TABLE `seances` (
   KEY `FK_seances_professeurs` (`id_prof`),
   KEY `FK_seances_groups` (`id_group`),
   KEY `FK_seances_semestres` (`id_semestre`),
-  CONSTRAINT `FK_seances_semestres` FOREIGN KEY (`id_semestre`) REFERENCES `semestres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_seances_groups` FOREIGN KEY (`id_group`) REFERENCES `groupes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_seances_matieres` FOREIGN KEY (`id_matiere`) REFERENCES `matieres` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_seances_professeurs` FOREIGN KEY (`id_prof`) REFERENCES `professeurs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_seances_semestres` FOREIGN KEY (`id_semestre`) REFERENCES `semestres` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_seances_groups` FOREIGN KEY (`id_group`) REFERENCES `groupes` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_seances_matieres` FOREIGN KEY (`id_matiere`) REFERENCES `matieres` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `FK_seances_professeurs` FOREIGN KEY (`id_prof`) REFERENCES `professeurs` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -280,61 +280,6 @@ CREATE TABLE `professeurs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Temporary table structure for view `groupes_details`
---
-
-DROP TABLE IF EXISTS `groupes_details`;
-/*!50001 DROP VIEW IF EXISTS `groupes_details`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `groupes_details` (
-  `id` tinyint NOT NULL,
-  `label` tinyint NOT NULL,
-  `id_niveau` tinyint NOT NULL,
-  `id_annee` tinyint NOT NULL,
-  `id_filiere` tinyint NOT NULL,
-  `annee` tinyint NOT NULL,
-  `filiere` tinyint NOT NULL,
-  `niveau` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
-
---
--- Final view structure for view `groupes_details`
---
-
-/*!50001 DROP TABLE IF EXISTS `groupes_details`*/;
-/*!50001 DROP VIEW IF EXISTS `groupes_details`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `groupes_details` AS select `groupes`.`id` AS `id`,`groupes`.`label` AS `label`,`groupes`.`id_niveau` AS `id_niveau`,`groupes`.`id_annee` AS `id_annee`,`groupes`.`id_filiere` AS `id_filiere`,`annees`.`label` AS `annee`,`filieres`.`label` AS `filiere`,`niveaux`.`label` AS `niveau` from (((`groupes` join `annee_scolaires` `annees` on((`annees`.`id` = `groupes`.`id_annee`))) join `niveaux` on((`niveaux`.`id` = `groupes`.`id_niveau`))) join `filieres` on((`filieres`.`id` = `groupes`.`id_filiere`))) order by `groupes`.`label` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-
 
 -- Export de la structure de table db_ecole. users
 CREATE TABLE IF NOT EXISTS `users` (
