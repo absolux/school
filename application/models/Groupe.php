@@ -112,6 +112,18 @@ class Groupe extends CI_Model
     }, []);
   }
   
+  function get_annee_list($id_annee) {
+    $this->db->select(["id", "label"])->where("id_annee", $id_annee);
+    
+    $results = $this->db->get($this->table)->result();
+    
+    return array_reduce($results, function ($memo, $item) {
+      $memo[$item->id] = $item->label;
+      
+      return $memo;
+    }, []);
+  }
+  
   // function get_list_with_niveaux() {
   //   $this->db->select(["{$this->table}.id", "{$this->table}.label", 'niveaux.label as niveau']);
   //   $this->db->join('niveaux', 'niveaux.id = groupes.id_niveau');

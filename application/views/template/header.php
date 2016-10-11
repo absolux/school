@@ -23,8 +23,19 @@
         <li class="<?php if ( strpos(uri_string(), 'classes') === 0 ) echo 'active' ?>">
           <?php echo anchor("classes", "Classes") ?>
         </li>
-        <li class="<?php if ( strpos(uri_string(), 'absences') === 0 ) echo 'active' ?>">
-          <?php echo anchor("absences", "Absences") ?>
+        <li class="dropdown <?php if ( strpos(uri_string(), 'absences') === 0 ) echo 'active' ?>">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+            Absences
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="<?php if ( strpos(uri_string(), 'absences') === 0 AND strtolower(uri_string()) !== 'absences/recap' ) echo 'active' ?>">
+              <?php echo anchor("absences", "Saisie") ?>
+            </li>
+            <li class="<?php if ( strpos(uri_string(), 'absences/recap') === 0 ) echo 'active' ?>">
+              <?php echo anchor("absences/recap", "Consultation") ?>
+            </li>
+          </ul>
         </li>
         <li class="<?php if ( strpos(uri_string(), 'annees-scolaires') === 0 ) echo 'active' ?>">
           <?php echo anchor("annees-scolaires", "Années scolaires") ?>

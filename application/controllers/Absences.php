@@ -40,7 +40,7 @@ class Absences extends MY_Controller
     
     $absences = $this->Absence->get_limit_data($this->per_page, $start, $e, $d, $m, $s);
     
-    $this->load->view('template/layout', [
+    $this->load->view($this->layout, [
       'e' => $e,
       'd' => $d,
       'm' => $m,
@@ -56,6 +56,30 @@ class Absences extends MY_Controller
       'matieres' => $this->Matiere->get_list(),
       'semestres' => $this->Semestre->get_list(),
       'etudiants' => $this->Etudiant->get_list(),
+    ]);
+  }
+  
+  public function recap() {
+    $id_annee = $this->input->get('id_annee', TRUE);
+    $id_group = $this->input->get('id_group', TRUE);
+    
+    $this->load->model('Annee');
+    
+    if ( empty($id_annee) ) {
+      $active_year = $this->Annee->get_active();
+      $id_annee = $active_year ? $active_year->id : $id_annee;
+    }
+    
+    $semestres = $this->Annee->get_semestres_ids($id_annee);
+    
+    $this->load->view($this->layout, [
+      'content_view' => 'absences/recap',
+      
+      'records' => $this->Absence->get_recap($semestres, $id_group),
+      'classes' => $this->Groupe->get_annee_list($id_annee),
+      'annees' => $this->Annee->get_list(),
+      'id_annee' => $id_annee,
+      'id_group' => $id_group,
     ]);
   }
 
@@ -149,7 +173,7 @@ class Absences extends MY_Controller
       'presence' => $this->Seance->get_presence($id_seance),
     );
     
-    $this->load->view('template/layout', $data);
+    $this->load->view($this->layout, $data);
   }
 
   public function update_action() 

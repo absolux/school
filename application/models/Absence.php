@@ -114,4 +114,37 @@ class Absence extends CI_Model
     return $this->db->set('statut', 1)->where($this->pk, $id)->update($this->table);
   }
   
+  function get_recap($semestres, $id_group = null) {
+    $i = 0;
+    $subQueries = [];
+    $groupQuery = null;
+    
+    for ( $i = 1; $i <= count($semestres); $i++ ) {
+      $this->db->select("count(*)");
+      $this->db->from("{$this->table} as a");
+      $this->db->join('seances as s', "s.id = a.id_seance");
+      $this->db->where('a.statut', 0);
+      $this->db->where('a.id_etudiant = etudiants.id');
+      $this->db->where('s.id_semestre', $semestres[$i - 1]);
+      
+      $subQueries[] = "({$this->db->get_compiled_select()}) as s{$i}";
+    }
+    
+    if ( $id_group ) {
+      $this->db->select('id_etudiant');
+      $this->db->from('etudiants_groups');
+      $this->db->where('id_group', $id_group);
+      
+      $groupQuery = $this->db->get_compiled_select();
+    }
+    
+    $this->db->select(array_merge(['etudiants.*'], $subQueries));
+    $this->db->from('etudiants');
+    $this->db->order_by('code');
+    
+    if ( $groupQuery ) $this->db->where_in('id', $groupQuery, FALSE);
+    // var_dump($this->db->get_compiled_select());
+    return $this->db->get()->result();
+  }
+  
 }

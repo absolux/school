@@ -52,7 +52,7 @@
   
   .select2 .select2-selection .select2-selection__rendered {
     padding-left: 3px;
-    padding-right: 13px;
+    padding-right: 18px;
     font-size: 16px;
     line-height: 1.5;
     color: #666666;
