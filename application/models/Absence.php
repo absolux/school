@@ -52,7 +52,7 @@ class Absence extends CI_Model
     
     if ( $m ) $this->db->where('seances.id_matiere', $m);
       
-    if ( $s ) $this->db->where('seances.id_semestre', $s);
+    if ( $s ) $this->db->where_in('seances.id_semestre', $s);
     
     $this->db->join('seances', "seances.id = {$this->table}.id_seance");
     
@@ -69,7 +69,7 @@ class Absence extends CI_Model
     
     if ( $m ) $this->db->where('seances.id_matiere', $m);
       
-    if ( $s ) $this->db->where('seances.id_semestre', $s);
+    if ( $s ) $this->db->where_in('seances.id_semestre', $s);
     
     $this->db->select([
       "{$this->table}.*",

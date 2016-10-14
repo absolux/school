@@ -15,30 +15,34 @@ class Absences extends MY_Controller
     $this->load->model('Groupe');
     $this->load->model('Semestre');
     $this->load->model('Etudiant');
+    $this->load->model('Annee');
   }
 
   public function index()
-  {
-    $e = urldecode($this->input->get('e', TRUE)); // id_etudiant
-    $d = urldecode($this->input->get('d', TRUE)); // date_debut
-    $m = urldecode($this->input->get('m', TRUE)); // id_matiere
-    $s = urldecode($this->input->get('s', TRUE)); // id_semestre
+  {    
+    $e = urldecode($this->input->get('e', TRUE)); // id_etudiant - student id
+    $d = urldecode($this->input->get('d', TRUE)); // date_debut - calendar day
+    $m = urldecode($this->input->get('m', TRUE)); // id_matiere - course id
+    $s = urldecode($this->input->get('s', TRUE)); // id_semestre - semestre id
+    $a = urldecode($this->input->get('a', TRUE)); // id_annee - academic year id
     $start = intval($this->input->get('start'));
     
     $active_semestre = $this->Semestre->get_active();
     $active_semestre = $active_semestre ? $active_semestre->id : NULL;
     
+    if ( empty($a) ) $a = $this->Annee->get_active()->id;
+    
     if ( empty($s) ) $s = $active_semestre;
-    else if ( $s === 'all' ) $s = '';
+    else if ( $s === 'all' ) $s = $this->Annee->get_semestres_ids($a);
     
     $config['per_page'] = $this->per_page;
     $config['base_url'] = base_url('absences');
-    $config['total_rows'] = $this->Absence->total_rows($e, $d, $m, $s);
+    $config['total_rows'] = $this->Absence->total_rows($e, $d, $m, (array) $s);
     
     $this->load->library('pagination');
     $this->pagination->initialize($config);
     
-    $absences = $this->Absence->get_limit_data($this->per_page, $start, $e, $d, $m, $s);
+    $absences = $this->Absence->get_limit_data($this->per_page, $start, $e, $d, $m, (array) $s);
     
     $this->load->view($this->layout, [
       'e' => $e,
@@ -62,8 +66,6 @@ class Absences extends MY_Controller
   public function recap() {
     $id_annee = $this->input->get('id_annee', TRUE);
     $id_group = $this->input->get('id_group', TRUE);
-    
-    $this->load->model('Annee');
     
     if ( empty($id_annee) ) {
       $active_year = $this->Annee->get_active();

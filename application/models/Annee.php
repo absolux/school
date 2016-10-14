@@ -124,11 +124,7 @@ class Annee extends CI_Model
   }
   
   function get_semestres_ids($id_annee) {
-    $result = $this->db->where('id_annee', $id_annee)->select('id')->get('semestres')->result();
-    
-    return array_map(function ($item) {
-      return $item->id;
-    }, $result);
+    return array_map(function ($item) { return $item->id; }, $this->get_semestres($id_annee));
   }
 
 }
