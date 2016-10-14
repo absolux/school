@@ -47,7 +47,7 @@
             <?php else: ?>
             <?php foreach ($records as $item) : ?>
             <tr>
-              <td><?php echo anchor("absences?e={$item->id}", "{$item->code} {$item->prenom} {$item->nom}") ?></td>
+              <td><?php echo anchor("absences?e={$item->id}&s=all&a={$id_annee}", "{$item->code} {$item->prenom} {$item->nom}") ?></td>
               <td class="hidden-xs text-center"><?php echo $s1 = (int) $item->s1 ?></td>
               <td class="hidden-xs text-center"><?php echo $s2 = (int) $item->s2 ?></td>
               <td class="text-center"><?php echo $s1 + $s2 ?></td>
@@ -62,3 +62,9 @@
     
   </div>
 </div>
+
+<script type="text/javascript">
+  $('#id_annee').change(function (e) {
+    location.href = "<?php echo uri_string() ?>?id_annee=" + $(this).val()
+  })
+</script>
