@@ -17,7 +17,7 @@
           
           <div class="form-group">
             <label class="form-label" for="id_group">Classes</label>
-            <?php echo form_dropdown("id_group", ['' => "Toutes les classes"] + $classes, $id_group, 'class="form-control" id=id_group') ?>
+            <?php echo form_dropdown("id_group", ['' => "Sélectionnez une classe"] + $classes, $id_group, 'class="form-control" id=id_group') ?>
           </div>
           
           <button type="submit" class="btn btn-block btn-info">Filtrer</button>
@@ -29,6 +29,11 @@
   </div>
   <div class="col-md-9">
     
+    <?php if ( empty($id_group) ): ?>
+    <div class="alert alert-warning">
+      <p>Sélectionnez une classe pour afficher les absences</p>
+    </div>
+    <?php else: ?>
     <div class="panel panel-default">
       <div class="panel-body">
         
@@ -50,7 +55,9 @@
               <td><?php echo anchor("absences?e={$item->id}&s=all&a={$id_annee}", "{$item->code} {$item->prenom} {$item->nom}") ?></td>
               <td class="hidden-xs text-center"><?php echo $s1 = (int) $item->s1 ?></td>
               <td class="hidden-xs text-center"><?php echo $s2 = (int) $item->s2 ?></td>
-              <td class="text-center"><?php echo $s1 + $s2 ?></td>
+              <td class="text-center <?php echo ($s1 > 0 OR $s2 > 0) ? 'text-danger' : '' ?>">
+                <b><?php echo $s1 + $s2 ?></b>
+              </td>
             </tr>
             <?php endforeach; ?>
             <?php endif; ?>
@@ -59,12 +66,13 @@
         
       </div>
     </div>
+    <?php endif; ?>
     
   </div>
 </div>
 
 <script type="text/javascript">
   $('#id_annee').change(function (e) {
-    location.href = "<?php echo uri_string() ?>?id_annee=" + $(this).val()
+    location.href = "<?php echo base_url('absences/recap?id_annee=') ?>" + $(this).val()
   })
 </script>

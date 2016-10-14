@@ -19,7 +19,9 @@ class Absences extends MY_Controller
   }
 
   public function index()
-  {    
+  {
+    $active_semestre = NULL;
+    // $this->output->enable_profiler(TRUE);
     $e = urldecode($this->input->get('e', TRUE)); // id_etudiant - student id
     $d = urldecode($this->input->get('d', TRUE)); // date_debut - calendar day
     $m = urldecode($this->input->get('m', TRUE)); // id_matiere - course id
@@ -27,14 +29,22 @@ class Absences extends MY_Controller
     $a = urldecode($this->input->get('a', TRUE)); // id_annee - academic year id
     $start = intval($this->input->get('start'));
     
-    $active_semestre = $this->Semestre->get_active();
-    $active_semestre = $active_semestre ? $active_semestre->id : NULL;
+    // we select the active year if not provided
+    if ( empty($a) ) $a = $this->session->year;
     
-    if ( empty($a) ) $a = $this->Annee->get_active()->id;
+    // we choose the active semestre of the active year as a default period
+    if ( empty($s) ) {
+      $active_semestre = $this->Semestre->get_active();
+      $s = $active_semestre = $active_semestre ? $active_semestre->id : NULL;
+    }
     
-    if ( empty($s) ) $s = $active_semestre;
-    else if ( $s === 'all' ) $s = $this->Annee->get_semestres_ids($a);
+    // we select only the semestres of the selected year,
+    // to prevent using all the semestres of the database
+    if ( $s === 'all' ) $s = $this->Annee->get_semestres_ids($a);
     
+    $absences = $this->Absence->get_limit_data($this->per_page, $start, $e, $d, $m, (array) $s);
+    
+    // configure the pagination library
     $config['per_page'] = $this->per_page;
     $config['base_url'] = base_url('absences');
     $config['total_rows'] = $this->Absence->total_rows($e, $d, $m, (array) $s);
@@ -42,13 +52,12 @@ class Absences extends MY_Controller
     $this->load->library('pagination');
     $this->pagination->initialize($config);
     
-    $absences = $this->Absence->get_limit_data($this->per_page, $start, $e, $d, $m, (array) $s);
-    
     $this->load->view($this->layout, [
+      'a' => $a,
       'e' => $e,
       'd' => $d,
       'm' => $m,
-      's' => $s,
+      's' => is_array($s) ? 'all' : $s,
       'start' => $start,
       'records' => $absences,
       'content_view' => 'absences/list',
@@ -58,30 +67,30 @@ class Absences extends MY_Controller
       
       'groupes' => $this->Groupe->get_list(),
       'matieres' => $this->Matiere->get_list(),
-      'semestres' => $this->Semestre->get_list(),
       'etudiants' => $this->Etudiant->get_list(),
+      'semestres' => $this->Semestre->get_list($a),
     ]);
   }
   
   public function recap() {
+    $records = [];
     $id_annee = $this->input->get('id_annee', TRUE);
     $id_group = $this->input->get('id_group', TRUE);
     
-    if ( empty($id_annee) ) {
-      $active_year = $this->Annee->get_active();
-      $id_annee = $active_year ? $active_year->id : $id_annee;
-    }
+    if ( empty($id_annee) ) $id_annee = $this->session->year;
     
     $semestres = $this->Annee->get_semestres_ids($id_annee);
+    
+    if ( $id_group ) $records = $this->Absence->get_recap($semestres, $id_group);
     
     $this->load->view($this->layout, [
       'content_view' => 'absences/recap',
       
-      'records' => $this->Absence->get_recap($semestres, $id_group),
       'classes' => $this->Groupe->get_annee_list($id_annee),
       'annees' => $this->Annee->get_list(),
       'id_annee' => $id_annee,
       'id_group' => $id_group,
+      'records' => $records,
     ]);
   }
 

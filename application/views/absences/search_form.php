@@ -1,4 +1,4 @@
-<?php echo form_open('absences', 'method=GET"') ?>
+<?php echo form_open('absences', 'method=GET"', ['a' => $a]) ?>
   <div class="form-group">
   <div class="form-group">
     <?php echo form_input('d', $d, 'class="form-control datepicker" placeholder="Sélectionnez une date"') ?>

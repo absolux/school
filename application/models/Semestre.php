@@ -77,13 +77,16 @@ class Semestre extends CI_Model
       return $this->db->where($this->pk, $id)->delete($this->table);
   }
   
-  function get_list()
+  function get_list($id_annee = NULL)
   {
-    $this->db->join('annee_scolaires AS a', "a.id = {$this->table}.id_annee AND a.active = 1");
+    if ( $id_annee ) {
+      $this->db->where('id_annee', $id_annee);
+    }
+    else {
+      $this->db->join('annee_scolaires AS a', "a.id = {$this->table}.id_annee AND a.active = 1");
+    }
     
-    $this->db->select(["{$this->table}.id", "{$this->table}.label"]);
-    
-    $results = $this->db->get($this->table)->result();
+    $results = $this->db->select("{$this->table}.*")->get($this->table)->result();
     
     return array_reduce($results, function ($memo, $item) {
       $memo[$item->id] = $item->label;

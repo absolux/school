@@ -8,7 +8,7 @@ class Auth extends CI_Controller
 		parent::__construct();
     
 		$this->load->model('User');
-    $this->load->modal('Annee');
+    $this->load->model('Annee');
 	}
 
 	public function login()
@@ -46,7 +46,7 @@ class Auth extends CI_Controller
           'login' => TRUE,
           'uid' => $uresult[0]->id,
           'name' => $uresult[0]->name,
-          'year' => $this->Annee->get_activ()->id,
+          'year' => $this->Annee->get_active()->id,
         ]);
 				
         $this->session->set_flashdata('login-success', 'Welcome');
