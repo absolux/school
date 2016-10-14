@@ -79,7 +79,7 @@ class Semestre extends CI_Model
   
   function get_list()
   {
-    $this->db->join('annee_scolaires as annees', "annees.id = {$this->table}.id_annee and annees.active = 1");
+    $this->db->join('annee_scolaires AS a', "a.id = {$this->table}.id_annee AND a.active = 1");
     
     $this->db->select(["{$this->table}.id", "{$this->table}.label"]);
     
@@ -105,7 +105,13 @@ class Semestre extends CI_Model
   }
   
   function get_active() {
-    return $this->db->limit(1)->select(['id', 'label'])->where('active', TRUE)->get($this->table)->first_row();
+    $this->db->join('annee_scolaires AS a', "a.id = {$this->table}.id_annee AND a.active = 1");
+    
+    $this->db->select(["{$this->table}.id", "{$this->table}.label"]);
+    
+    $this->db->where("{$this->table}.active", TRUE);
+    
+    return $this->db->get($this->table)->first_row();
   }
 
 }
