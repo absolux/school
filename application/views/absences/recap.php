@@ -9,7 +9,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         
-        <?php echo form_open('absences/recap', 'method=GET"') ?>
+        <?php echo form_open('absences/recap', 'method=GET" id="absences-filter"') ?>
           <div class="form-group">
             <label class="form-label" for="id_annee">Année scolaire</label>
             <?php echo form_dropdown("id_annee", $annees, $id_annee, 'class="form-control" id=id_annee') ?>
@@ -77,7 +77,9 @@
 </div>
 
 <script type="text/javascript">
-  $('#id_annee').change(function (e) {
-    location.href = "<?php echo base_url('absences/recap?id_annee=') ?>" + $(this).val()
+  $('#absences-filter').on('change', function (e) {
+    if ( e.target.name === 'id_annee' ) $('#id_group').val('')
+    
+    this.submit()
   })
 </script>

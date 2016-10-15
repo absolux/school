@@ -102,57 +102,43 @@ class Absences extends MY_Controller
   
   protected function to_excel($data)
   {
-    $this->load->helper('export_to_excel');
+    $header = ['Code', 'Prénom', 'Nom', 'Séance', 'Matière', 'Date', 'Période'];
+    $content = join("\t", $header) . "\n";
     
-    xlsBOF("detail-absences.xls");
-    
-    xlsWriteHeader(['Code', 'Prénom', 'Nom', 'Séance', 'Matière', 'Date', 'Période']);
-    
-    $row = 1;
     foreach ( $data as $item ) {
-      $col = 0;
-      
-      xlsWriteLabel($row, $col++, utf8_decode($item->code));
-      xlsWriteLabel($row, $col++, utf8_decode($item->prenom));
-      xlsWriteLabel($row, $col++, utf8_decode($item->nom));
-      xlsWriteLabel($row, $col++, utf8_decode($item->seance_title));
-      xlsWriteLabel($row, $col++, utf8_decode($item->matiere));
-      xlsWriteLabel($row, $col++, date('d/m/Y', strtotime($item->date_debut)));
-      xlsWriteLabel($row, $col++, utf8_decode($item->semestre));
-      
-      $row++;
+      $content .= join("\t", [
+        $item->code,
+        $item->prenom,
+        $item->nom,
+        $item->seance_title,
+        $item->matiere,
+        date('d/m/Y', strtotime($item->date_debut)),
+        $item->semestre,
+      ]) . "\n";
     }
-
-    xlsEOF();
     
-    exit();
+    $this->load->helper('download');
+    force_download('detail-absences.xls', $content, TRUE);
   }
   
   protected function recap_to_excel($data)
   {
-    $this->load->helper('export_to_excel');
+    $header = ['Code', 'Prénom', 'Nom', 'Semestre 1', 'Semestre 2', 'Total'];
+    $content = join("\t", $header) . "\n";
     
-    xlsBOF("recap-absences.xls");
-    
-    xlsWriteHeader(['Code', 'Prénom', 'Nom', 'Semestre 1', 'Semestre 2', 'Total']);
-    
-    $row = 1;
     foreach ( $data as $item ) {
-      $col = 0;
-      
-      xlsWriteLabel($row, $col++, utf8_decode($item->code));
-      xlsWriteLabel($row, $col++, utf8_decode($item->prenom));
-      xlsWriteLabel($row, $col++, utf8_decode($item->nom));
-      xlsWriteNumber($row, $col++, (int) $item->s1);
-      xlsWriteNumber($row, $col++, (int) $item->s2);
-      xlsWriteNumber($row, $col++, (int) $item->s1 + $item->s2);
-      
-      $row++;
+      $content .= join("\t", [
+        $item->code,
+        $item->prenom,
+        $item->nom,
+        $s1 = (int) $item->s1,
+        $s2 = (int) $item->s2,
+        $s1 + $s2,
+      ]) . "\n";
     }
-
-    xlsEOF();
     
-    exit();
+    $this->load->helper('download');
+    force_download('recap-absences.xls', $content, TRUE);
   }
   
   // public function read($id) 
