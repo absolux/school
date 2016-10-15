@@ -27,7 +27,8 @@ class Absences extends MY_Controller
     $m = urldecode($this->input->get('m', TRUE)); // id_matiere - course id
     $s = urldecode($this->input->get('s', TRUE)); // id_semestre - semestre id
     $a = urldecode($this->input->get('a', TRUE)); // id_annee - academic year id
-    $start = intval($this->input->get('start'));
+    $start = intval($this->input->get('start', TRUE));
+    $export = $this->input->get('export', TRUE);
     
     // we select the active year if not provided
     if ( empty($a) ) $a = $this->session->year;
@@ -43,6 +44,8 @@ class Absences extends MY_Controller
     if ( $s === 'all' ) $s = $this->Annee->get_semestres_ids($a);
     
     $absences = $this->Absence->get_limit_data($this->per_page, $start, $e, $d, $m, (array) $s);
+    
+    if ( $export === 'xls' ) return $this->to_excel($absences);
     
     // configure the pagination library
     $config['per_page'] = $this->per_page;
@@ -74,6 +77,7 @@ class Absences extends MY_Controller
   
   public function recap() {
     $records = [];
+    $export = $this->input->get('export', TRUE);
     $id_annee = $this->input->get('id_annee', TRUE);
     $id_group = $this->input->get('id_group', TRUE);
     
@@ -82,6 +86,8 @@ class Absences extends MY_Controller
     $semestres = $this->Annee->get_semestres_ids($id_annee);
     
     if ( $id_group ) $records = $this->Absence->get_recap($semestres, $id_group);
+    
+    if ( $export ) return $this->recap_to_excel($records);
     
     $this->load->view($this->layout, [
       'content_view' => 'absences/recap',
@@ -93,7 +99,62 @@ class Absences extends MY_Controller
       'records' => $records,
     ]);
   }
+  
+  protected function to_excel($data)
+  {
+    $this->load->helper('export_to_excel');
+    
+    xlsBOF("detail-absences.xls");
+    
+    xlsWriteHeader(['Code', 'Prénom', 'Nom', 'Séance', 'Matière', 'Date', 'Période']);
+    
+    $row = 1;
+    foreach ( $data as $item ) {
+      $col = 0;
+      
+      xlsWriteLabel($row, $col++, utf8_decode($item->code));
+      xlsWriteLabel($row, $col++, utf8_decode($item->prenom));
+      xlsWriteLabel($row, $col++, utf8_decode($item->nom));
+      xlsWriteLabel($row, $col++, utf8_decode($item->seance_title));
+      xlsWriteLabel($row, $col++, utf8_decode($item->matiere));
+      xlsWriteLabel($row, $col++, date('d/m/Y', strtotime($item->date_debut)));
+      xlsWriteLabel($row, $col++, utf8_decode($item->semestre));
+      
+      $row++;
+    }
 
+    xlsEOF();
+    
+    exit();
+  }
+  
+  protected function recap_to_excel($data)
+  {
+    $this->load->helper('export_to_excel');
+    
+    xlsBOF("recap-absences.xls");
+    
+    xlsWriteHeader(['Code', 'Prénom', 'Nom', 'Semestre 1', 'Semestre 2', 'Total']);
+    
+    $row = 1;
+    foreach ( $data as $item ) {
+      $col = 0;
+      
+      xlsWriteLabel($row, $col++, utf8_decode($item->code));
+      xlsWriteLabel($row, $col++, utf8_decode($item->prenom));
+      xlsWriteLabel($row, $col++, utf8_decode($item->nom));
+      xlsWriteNumber($row, $col++, (int) $item->s1);
+      xlsWriteNumber($row, $col++, (int) $item->s2);
+      xlsWriteNumber($row, $col++, (int) $item->s1 + $item->s2);
+      
+      $row++;
+    }
+
+    xlsEOF();
+    
+    exit();
+  }
+  
   // public function read($id) 
   // {
   //   $row = $this->Absence->get_by_id($id);

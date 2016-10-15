@@ -19,6 +19,10 @@
       </div>
     </div>
     
+    <a href="<?php echo uri_string() . '?' . $_SERVER['QUERY_STRING'] . '&export=xls' ?>"
+       class="btn btn-block btn-success" target="_blank">Exporter à Excel</a>
+    <br />
+    
     <div class="panel panel-default">
       <div class="panel-body">
         

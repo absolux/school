@@ -21,6 +21,11 @@
           </div>
           
           <button type="submit" class="btn btn-block btn-info">Filtrer</button>
+          
+          <?php if ( $id_group ): ?>
+          <a href="<?php echo site_url(uri_string()) . '?' . $_SERVER['QUERY_STRING'] . '&export=xls' ?>"
+             class="btn btn-block btn-success" target="_blank">Exporter à Excel</a>
+          <?php endif; ?>
         <?php echo form_close() ?>
         
       </div>
