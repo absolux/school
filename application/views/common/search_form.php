@@ -1,9 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed') ?>
 
-<form action="<?php echo site_url(uri_string()); ?>" class="form-inline" method="GET">
-  <div class="form-group">
+<form action="<?php echo site_url(uri_string()); ?>" class="-form-inline" method="GET">
+  <div class="form-group" style="margin-bottom: 0;">
     <div class="input-group">
-      <input type="text" class="form-control" name="q" value="<?php echo $q; ?>" placeholder="Rechercher">
+      <input type="text" id="search-field" class="form-control" name="q" value="<?php echo $q; ?>" placeholder="Rechercher">
       <span class="input-group-addon" style="padding-right: 0;"><i class="glyphicon glyphicon-search"></i></span>
     </div>
   </div>

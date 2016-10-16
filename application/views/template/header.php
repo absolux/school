@@ -52,11 +52,25 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a href="<?php echo site_url('auth/logout') ?>">
-            Quitter
-            <i class="glyphicon glyphicon-log-out"></i>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+            <i class="glyphicon glyphicon-user"></i>
+            <span class="caret"></span>
           </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#">
+                <i class="glyphicon glyphicon-cog"></i>
+                Informations
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo site_url('auth/logout') ?>">
+                <i class="glyphicon glyphicon-off"></i>
+                Quitter
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->

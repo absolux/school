@@ -44,6 +44,18 @@
     .close {
       font-size: 28px;
     }
+    
+    .dropdown-menu > li > a {
+      padding: 5px 20px;
+    }
+    
+    .dropdown-menu > li > a i {
+      margin-right: 5px;
+    }
+    
+    #search-field {
+      box-shadow: none;
+    }
   </style>
   
   <!-- Scripts -->
